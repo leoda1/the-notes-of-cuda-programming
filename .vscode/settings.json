@@ -1,0 +1,10 @@
+{
+    "markdown-preview-enhanced.enableCodeBlockHighlight": true,
+    "markdown-preview-enhanced.enableExtendedTableSyntax": true,
+    "markdown-preview-enhanced.enableCriticMarkupSyntax": true,
+    "markdown.preview.fontSize": 14,
+    "markdown.preview.lineHeight": 1.6,
+    "markdown.preview.scrollPreviewWithEditor": true,
+    "markdown.preview.scrollEditorWithPreview": true,
+    "markdown.preview.doubleClickToSwitchToEditor": true
+}
