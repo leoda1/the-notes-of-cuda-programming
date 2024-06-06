@@ -4,11 +4,14 @@
 英伟达 《CUDA C++ Programming Guide》 官方文档学习记录笔记 版本【Release 12.4】出版时间【 Apr 22, 2024】
 
 ## 目录
-- [5.1 kernels内核](#kernels)
-- [5.2 Thread Hierarchy线程分级结构](#主要内容)
-- 
+- [Chapter 5. programming model](#chapter-5-programming-model)
+  - [简介](#简介)
+  - [目录](#目录)
+- [5.1 kernels](#51-kernels)
+- [Thread Hierarchy线程分级结构](#thread-hierarchy线程分级结构)
+  - [Thread Block Clusters](#thread-block-clusters)
 
-# kernels
+# 5.1 kernels
 **前言：**
 1.定义：CUDA C++通过定义C++函数拓展C++，称为内核（kernels）。调用该内核时，由N个不同的cuda线程并行执行N次。
 2.__global__来定义内核，<<<和>>>来执行配置。
@@ -55,8 +58,8 @@ int main() {
     float C[N][N];
     
     int numThreads = 1;
-    dim3 blockDim(N, N);
-    MatAdd<<<numThreads, blockDim>>>(A, B, C);
+    dim3 threadsPerBlock(N, N);
+    MatAdd<<<numThreads, threadsPerBlock>>>(A, B, C);
     //CUDA同步函数，执行完核函数后继续执行主机程序
     cudaDeviceSynchronize();
     std::cout << "Matrix C:" << std::endl;
@@ -77,5 +80,47 @@ Matrix C:
 -1.07374e+08 -1.07374e+08 -1.07374e+08(这里的结果不是每个元素都是10，因为threadIdx.x是线程在块中的index不是在矩阵中的index
 ```
 每个块（block）的线程数是有限的，因为所有块都想驻留在同一个核心上。同时，一个内核可以在多个块上并行执行，这样就可以让线程总数等于块数乘以线程数。一个块当中是由一维，二维或三维的网格构成，网格中线程块的数量通常由正在处理的数据的大小决定。
-在 CUDA 编程中，启动内核函数时需要指定线程块的数量和每个线程块中线程的数量。这些数量可以是简单的整数（int）或三维向量（dim3）类型。
-## 
+<p align="center">
+  <img src="img/image.png" alt="alt text" />
+</p>
+<p align="center">线程与网格图示</p>
+在 CUDA 编程中，启动内核函数时需要指定线程块的数量或每个线程块中线程的数量。这些数量可以是简单的整数（int）或三维向量（dim3）类型。指定线程块用内置变量：blockIdx，指定线程块的维度用内置变量：blockDim。
+
+```cpp
+//kernal defination
+#include <iostream>
+
+#define N 3  //matrix size
+__global__ void MatAdd(float A[N][N], float B[N][N]
+                       , float C[N][N]) {
+    //blockIdx.x为线程块的编号，blockDim.x为线程块的大小，threadIdx.x为线程的编号
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
+    if (i < N && j < N)
+        C[i][j] = A[i][j] + B[i][j];
+}
+
+int main() {
+    //Kernal invocation with ONE block of N*N*1 threads
+    float A[N][N] = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
+    float B[N][N] = { {9, 8, 7}, {6, 5, 4}, {3, 2, 1} };
+    float C[N][N];
+    //设置线程块的大小为3*3
+    dim3 threadsPerBlock(3, 3);
+    //设置线程块的数量为N/3
+    dim3 numBlocks(N / threadsPerBlock.x, N / threadsPerBlock.y);
+    MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
+    //CUDA同步函数，执行完核函数后继续执行主机程序
+    cudaDeviceSynchronize();
+    std::cout << "Matrix C:" << std::endl;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            std::cout << C[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    return 0;
+}
+```
+这里原文PDF提到使用线程块内的线程可以通过共享内存来共享数据并通过同步它们的执行来协调内存访问。这里是通过__syncthreads()函数来实现的。__syncthreads()函数会等待所有线程都到达该函数调用处，然后再继续执行。线程同步原语参考：Cooperative Groups API，它提供了一组丰富的线程同步原语。
+## Thread Block Clusters
