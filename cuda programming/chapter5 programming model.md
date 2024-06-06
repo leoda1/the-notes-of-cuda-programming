@@ -8,15 +8,14 @@
   - [简介](#简介)
   - [目录](#目录)
 - [5.1 kernels](#51-kernels)
-- [Thread Hierarchy线程分级结构](#thread-hierarchy线程分级结构)
-  - [Thread Block Clusters](#thread-block-clusters)
+- [5.2 Thread Hierarchy线程分级结构](#52-thread-hierarchy线程分级结构)
+  - [5.2.1 Thread Block Clusters线程块集群](#521-thread-block-clusters线程块集群)
 
 # 5.1 kernels
 **前言：**
 1.定义：CUDA C++通过定义C++函数拓展C++，称为内核（kernels）。调用该内核时，由N个不同的cuda线程并行执行N次。
 2.__global__来定义内核，<<<和>>>来执行配置。
 3.执行时每个线程（thread）有一个单独ID，该ID可以由内置变量再内核内访问。
-**代码：**
 ```cpp
 //定义kernel
 #include<cuda_runtime.h>
@@ -35,7 +34,7 @@ int main()
     return 0;
 }
 ```
-# Thread Hierarchy线程分级结构
+# 5.2 Thread Hierarchy线程分级结构
 上一个代码当中的threaIdx.x就是当前线程在块中的索引，它表示线程在线程块中的位置。线程块（thread block）：由N个线程组成的集合，每个线程块都有自己的线程ID。可以用一维，二维和三维的线程块对线程进行划分，线程块的大小由用户指定。这就有了一种自然的方式去计算向量、矩阵等等。
 对于一维块，线程的索引和线程的ID是一致的；对于二维块（Dx，Dy），线程的索引是（x, y）对应的线程ID是(x + y*Dx)；对于三维块（Dx，Dy，Dz），线程的索引是（x, y, z）对应的线程ID是(x + y*Dx + z*Dx*Dy)。
 ```cpp
@@ -123,4 +122,9 @@ int main() {
 }
 ```
 这里原文PDF提到使用线程块内的线程可以通过共享内存来共享数据并通过同步它们的执行来协调内存访问。这里是通过__syncthreads()函数来实现的。__syncthreads()函数会等待所有线程都到达该函数调用处，然后再继续执行。线程同步原语参考：Cooperative Groups API，它提供了一组丰富的线程同步原语。
-## Thread Block Clusters
+## 5.2.1 Thread Block Clusters线程块集群
+线程块集群中的不同线程块在GPU处理集群中的共同调度与“线程块中的不同线程在流式处理器上共同调度相似”。线程块集群也有一维，二维和三维。一个集群最多支持8个线程块。见下图：
+<p align="center">
+  <img src="img/fig5.png" alt="alt text" />
+</p>
+<p align="center">线程块集群示意图</p>
