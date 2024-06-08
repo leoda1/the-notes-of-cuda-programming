@@ -12,4 +12,4 @@ if(POLICY CMP0104)
   cmake_policy(SET CMP0104 NEW)
 endif()
 
-add_executable(hellocuda chapter5.cu)
+add_executable(hellocuda chapter5-2.cu)

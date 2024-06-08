@@ -123,8 +123,110 @@ int main() {
 ```
 这里原文PDF提到使用线程块内的线程可以通过共享内存来共享数据并通过同步它们的执行来协调内存访问。这里是通过__syncthreads()函数来实现的。__syncthreads()函数会等待所有线程都到达该函数调用处，然后再继续执行。线程同步原语参考：Cooperative Groups API，它提供了一组丰富的线程同步原语。
 ## 5.2.1 Thread Block Clusters线程块集群
-线程块集群中的不同线程块在GPU处理集群中的共同调度与“线程块中的不同线程在流式处理器上共同调度相似”。线程块集群也有一维，二维和三维。一个集群最多支持8个线程块。见下图：
+线程块集群中的不同线程块在GPU处理集群中的共同调度与“线程块中的不同线程在流式多处理器上共同调度相似”。线程块集群也有一维，二维和三维。一个集群最多支持8个线程块。见下图：
 <p align="center">
   <img src="img/fig5.png" alt="alt text" />
 </p>
 <p align="center">线程块集群示意图</p>
+线程块集群俩种使用方式。一，使用__cluster_dims__(X, Y, Z)来指定线程块集群的大小。二，使用cuda内核启动的API，cudaLaunchKernelEx。接下来，示例代码展示用编译器时间内核启动集群。如果内核使用编译时集群大小，则在启动内核时无法修改集群大小。
+
+```cpp
+∕∕ Kernel definition 官方给的代码
+∕∕ Compile time cluster size 2 in X-dimension and 1 in Y and Z dimension
+_global__ void __cluster_dims__(2, 1, 1) cluster_kernel(float *input, float* output) { }
+int main() 
+{
+    float *input, *output;
+    ∕∕ Kernel invocation with compile time cluster sizedim3 threadsPerBlock(16, 16); 
+    dim3 numBlocks(N ∕ threadsPerBlock.x, N ∕ threadsPerBlock.y);
+    ∕∕ The grid dimension is not affected by cluster launch, and is still enumerated ∕∕ using number of blocks. ∕∕ The grid dimension must be a multiple of cluster size.
+    cluster_kernel<<<numBlocks, threadsPerBlock>>>(input, output); 
+}
+//这里的__cluster_dims__(2, 1, 1)本人没成功但是删去后，直接定义集群内核却可以，如下代码：
+//kernal defination
+#include <cuda_runtime.h>
+#include <iostream>
+#define N 3
+__global__ void cluster_kernel(float *input, float *output)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x + (blockIdx.y * blockDim.y + threadIdx.y) * gridDim.x * blockDim.x;
+    if (idx < N) {
+        output[idx] = input[idx] * 2; 
+    }
+}
+
+int main() {
+    float *input, *output;
+    float hostInput[N] = {1.0, 2.0, 3.0};
+    cudaMalloc((void**)&input,  N * sizeof(float));
+    cudaMemcpy(input, hostInput, N * sizeof(float), cudaMemcpyHostToDevice);
+    cudaMalloc((void**)&output, N * sizeof(float));
+    //设置线程块的大小为3*3
+    dim3 threadsPerBlock(3, 3);
+    //设置线程块的数量为N/3
+    dim3 numBlocks((N + threadsPerBlock.x - 1) / threadsPerBlock.x, (N + threadsPerBlock.y - 1) / threadsPerBlock.y);
+    cluster_kernel<<<numBlocks, threadsPerBlock>>>(input, output);
+    // 在完成后记得释放内存
+    cudaFree(input);
+    cudaFree(output);
+}
+```
+文档内给了另一种实现方法，用cudaLaunchKernelEx这个API，最后成功实现了使用线程块集群计算简单矩阵。
+```cpp
+//kernal defination
+#include <cuda_runtime.h>
+#include <iostream>
+#define N 3
+
+__global__ void cluster_kernel(float *input, float *output)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < N) {
+        output[idx] = input[idx] * 2.0f;
+    }
+}
+
+int main() {
+    float *input, *output;
+    // 为输入和输出数组分配设备内存
+    cudaMalloc((void**)&input, N * sizeof(float));
+    cudaMalloc((void**)&output, N * sizeof(float));
+
+    // 示例输入数据
+    float h_input[N] = {1.0f, 2.0f, 3.0f};
+    cudaMemcpy(input, h_input, N * sizeof(float), cudaMemcpyHostToDevice);
+    
+    dim3 threadsPerBlock(1, 1);
+    dim3 numBlocks(N, 1);
+    cudaLaunchConfig_t config = {0};
+    config.gridDim = numBlocks;
+    config.blockDim = threadsPerBlock;
+
+    cudaLaunchAttribute attribute[1];
+    attribute[0].id = cudaLaunchAttributeClusterDimension;
+    attribute[0].val.clusterDim.x = 2;
+    attribute[0].val.clusterDim.y = 1;
+    attribute[0].val.clusterDim.z = 1;
+    config.attrs = attribute;
+    config.numAttrs = 1;
+
+    void *args[] = { &input, &output };
+    cudaLaunchKernelExC(&config, cluster_kernel, args);
+    
+    cudaDeviceSynchronize();
+    float h_output[N];
+    cudaMemcpy(h_output, input, N * sizeof(float), cudaMemcpyDeviceToHost);
+    for (int i = 0; i < 3; ++i) {
+        std::cout << "Output[" << i << "] = " << h_output[i] << std::endl;
+    }
+
+    // 清理设备内存
+    cudaFree(input);
+    cudaFree(output);
+    return 0;
+}
+// static __inline__ __host__ cudaError_t cudaLaunchKernelExC(const cudaLaunchConfig_t *config,
+//                                                                const void *func,
+//                                                                  void **args)
+// 这是代码库中找到的cudaLaunchKernelExC函数，文档中的cudaLaunchKernelEx有问题。
+```
