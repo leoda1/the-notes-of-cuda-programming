@@ -10,6 +10,8 @@
 - [5.1 kernels](#51-kernels)
 - [5.2 Thread Hierarchy线程分级结构](#52-thread-hierarchy线程分级结构)
   - [5.2.1 Thread Block Clusters线程块集群](#521-thread-block-clusters线程块集群)
+- [5.3 Memory Hierarchy内存分级结构](#53-memory-hierarchy内存分级结构)
+- [5.4 Heterogeneous Programming异构编程](#54-heterogeneous-programming异构编程)
 
 # 5.1 kernels
 **前言：**
@@ -230,3 +232,18 @@ int main() {
 //                                                                  void **args)
 // 这是代码库中找到的cudaLaunchKernelExC函数，文档中的cudaLaunchKernelEx有问题。
 ```
+
+# 5.3 Memory Hierarchy内存分级结构
+CUDA 线程在执行过程中可以访问多个内存空间的数据，如图6。每个线程都有私有的本地内存，每个线程块对块的所有线程都有可见的共享内存，每个线程块集群中的线程块可以对彼此的共享内存执行读取、写入和同步操作。所有线程可以访问相同的全局内存。还有两个额外的只读内存空间可供所有线程访问：常量内存空间和纹理内存空间。全局、常量和纹理内存空间针对不同的内存使用进行了优化。纹理内存还为某些特定的数据格式提供不同的寻址模式以及数据过滤。全局、常量和纹理内存空间在同一应用程序启动内核时是持久的。
+<p align="center">
+  <img src="img/fig6.png" alt="alt text" />
+</p>
+<p align="center">图6 内存分级结构</p>
+
+# 5.4 Heterogeneous Programming异构编程
+如图7所示，CUDA编程模型假设CUDA线程在物理上独立的设备上执行，该设备作为运行C++程序的主机的协处理器运行。例如，当内核在GPU上执行，而C++程序的其余部分在CPU上执行时。主机和设备各自维护自己的独立内存空间，分别称为主机内存和设备内存。主机内存是在CPU上的DRAM，而设备内存是在GPU上的DRAM。
+程序通过调用CUDA运行时库（就是我前面代码里面出现的#include runtime.h来管理内核可见的全局、常量和纹理内存空间。这包括设备内存分配和释放，以及主机和设备内存之间的数据传输。统一内存提供托管内存以桥接主机和设备内存空间。托管内存可以从系统中的所有CPU和GPU访问，作为具有公共地址空间的单个连贯内存映像。此功能实现了设备内存的超额预订，并且可以通过消除在主机和设备上显式镜像数据的需要，大大简化移植应用程序的任务。有关统一内存的介绍，请参阅统一内存编程。
+<p align="center">
+  <img src="img/fig7.png" alt="alt text" />
+</p>
+<p align="center">图7 异构编程</p>
