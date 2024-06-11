@@ -9,6 +9,7 @@
   - [目录](#目录)
 - [5.1 kernels](#51-kernels)
 - [5.2 Thread Hierarchy线程分级结构](#52-thread-hierarchy线程分级结构)
+      - [总结：](#总结)
   - [5.2.1 Thread Block Clusters线程块集群](#521-thread-block-clusters线程块集群)
 - [5.3 Memory Hierarchy内存分级结构](#53-memory-hierarchy内存分级结构)
 - [5.4 Heterogeneous Programming异构编程](#54-heterogeneous-programming异构编程)
@@ -39,6 +40,12 @@ int main()
     return 0;
 }
 ```
+注意事项：
+1.核函数只能访问GPU内存，不能访问主机内存。除非使用PCie总线或者API来实现数据的交互。
+2.核函数写的时候需要明确参数个数。
+3.核函数不能使用静态变量。
+4.核函数不能使用函数指针。
+5.核函数具有异步性。CPU执行main的时候完成需要等待GPU执行完毕使用cudaDeviceSynchronize()来同步数据。
 # 5.2 Thread Hierarchy线程分级结构
 上一个代码当中的threaIdx.x就是当前线程在块中的索引，它表示线程在线程块中的位置。线程块（thread block）：由N个线程组成的集合，每个线程块都有自己的线程ID。可以用一维，二维和三维的线程块对线程进行划分，线程块的大小由用户指定。这就有了一种自然的方式去计算向量、矩阵等等。
 对于一维块，线程的索引和线程的ID是一致的；对于二维块（Dx，Dy），线程的索引是（x, y）对应的线程ID是(x + y*Dx)；对于三维块（Dx，Dy，Dz），线程的索引是（x, y, z）对应的线程ID是(x + y*Dx + z*Dx*Dy)。
@@ -110,10 +117,10 @@ int main() {
     float B[N][N] = { {9, 8, 7}, {6, 5, 4}, {3, 2, 1} };
     float C[N][N];
     //设置线程块的大小为3*3
-    dim3 threadsPerBlock(3, 3);
+    dim3 gridDim(3, 3);
     //设置线程块的数量为N/3
-    dim3 numBlocks(N / threadsPerBlock.x, N / threadsPerBlock.y);
-    MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
+    dim3 blockDim(N / threadsPerBlock.x, N / threadsPerBlock.y);
+    MatAdd<<<gridDim, blockDim>>>(A, B, C);
     //CUDA同步函数，执行完核函数后继续执行主机程序
     cudaDeviceSynchronize();
     std::cout << "Matrix C:" << std::endl;
@@ -127,6 +134,12 @@ int main() {
 }
 ```
 这里原文PDF提到使用线程块内的线程可以通过共享内存来共享数据并通过同步它们的执行来协调内存访问。这里是通过__syncthreads()函数来实现的。__syncthreads()函数会等待所有线程都到达该函数调用处，然后再继续执行。线程同步原语参考：Cooperative Groups API，它提供了一组丰富的线程同步原语。
+#### 总结：
+维度|描述|块在网格的索引|线程在块的索引|线程在网格的索引
+-|-|-|-|-
+一维情况下 | 假设gridDim=2， blockDim=4，则每个网格中线程块数量为3，ThreadIdx.x的索引范围为0,1,2,3。|gridDim.x|blockDim.x|id = blockIdx.x * blockDim.x + threadIdx.x
+二维情况下 | 假设gridDim=(2,2)， blockDim=(4,4)，则每个网格中线程块数量为4，ThreadIdx.x和ThreadIdx.y的索引范围为0,1,2,3。 | blockid = blockIdx.x + blockIdx.y * gridDim.x|Threadid =ThreadIdx.y*blockDim.x+ThreadIdx.x |id=blockid * (blockDim.x * blockDim.y) + threadId
+三维情况下 | 假设gridDim=(2,2,2)， blockDim=(4,4,4)，则每个网格中线程块数量为8，ThreadIdx.x,ThreadIdx.y和ThreadIdx.z的索引范围为0,1,2,3。 | blockid = blockIdx.x +blockIdx.y * gridDim.x + gridDim.x*gridDim.y*blockIdx.z|Threadid= ThreadIdx.z*blockDim.x*blockDim.y+ThreadIdx.y*blockDim.x+ThreadIdx.x |id=blockid * (blockDim.x * blockDim.y * blockDim.z) + threadId
 ## 5.2.1 Thread Block Clusters线程块集群
 线程块集群中的不同线程块在GPU处理集群中的共同调度与“线程块中的不同线程在流式多处理器上共同调度相似”。线程块集群也有一维，二维和三维。一个集群最多支持8个线程块。见下图：
 <p align="center">
