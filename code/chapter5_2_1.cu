@@ -34,6 +34,7 @@ int main() {
     attribute[0].val.clusterDim.z = 1;
     config.attrs = attribute;
     config.numAttrs = 1;
+    
 
     void *args[] = { &input, &output };
     cudaLaunchKernelExC(&config, cluster_kernel, args);

@@ -1,4 +1,3 @@
-//kernal defination
 #include <iostream>
 
 #define N 3  //matrix size

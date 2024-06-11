@@ -12,6 +12,9 @@
   - [5.2.1 Thread Block Clusters线程块集群](#521-thread-block-clusters线程块集群)
 - [5.3 Memory Hierarchy内存分级结构](#53-memory-hierarchy内存分级结构)
 - [5.4 Heterogeneous Programming异构编程](#54-heterogeneous-programming异构编程)
+- [5.5 Asynchronous SIMT Programming Model异步SIMD编程模型](#55-asynchronous-simt-programming-model异步simd编程模型)
+  - [5.5.1 Asynchronous Operations异步操作](#551-asynchronous-operations异步操作)
+- [5.6 Compute Capabilit计算能力](#56-compute-capabilit计算能力)
 
 # 5.1 kernels
 **前言：**
@@ -242,8 +245,21 @@ CUDA 线程在执行过程中可以访问多个内存空间的数据，如图6�
 
 # 5.4 Heterogeneous Programming异构编程
 如图7所示，CUDA编程模型假设CUDA线程在物理上独立的设备上执行，该设备作为运行C++程序的主机的协处理器运行。例如，当内核在GPU上执行，而C++程序的其余部分在CPU上执行时。主机和设备各自维护自己的独立内存空间，分别称为主机内存和设备内存。主机内存是在CPU上的DRAM，而设备内存是在GPU上的DRAM。
-程序通过调用CUDA运行时库（就是我前面代码里面出现的#include runtime.h来管理内核可见的全局、常量和纹理内存空间。这包括设备内存分配和释放，以及主机和设备内存之间的数据传输。统一内存提供托管内存以桥接主机和设备内存空间。托管内存可以从系统中的所有CPU和GPU访问，作为具有公共地址空间的单个连贯内存映像。此功能实现了设备内存的超额预订，并且可以通过消除在主机和设备上显式镜像数据的需要，大大简化移植应用程序的任务。有关统一内存的介绍，请参阅统一内存编程。
+程序通过调用CUDA运行时库（就是我前面代码里面出现的#include cuda_runtime.h）来管理内核可见的全局、常量和纹理内存空间。这包括设备内存分配和释放，以及主机和设备内存之间的数据传输。统一内存提供了一种管理内存的方式，能够桥接主机和设备内存空间。统一内存在系统中的所有CPU和GPU上作为一个单一的、一致的内存图像进行访问，并具有一个共同的地址空间。这种能力允许设备内存的过度订阅，并且可以通过消除显式镜像主机和设备上的数据的需求，大大简化应用程序的移植任务。
 <p align="center">
   <img src="img/fig7.png" alt="alt text" />
 </p>
-<p align="center">图7 异构编程</p>
+<p align="center">图7 cuda为什么是异构编程</p>
+
+# 5.5 Asynchronous SIMT Programming Model异步SIMD编程模型
+CUDA编程模型支持异步编程，即内核可以并发执行，而不必等待前一个内核执行完毕。异步编程模型可以提高程序的并发度，并减少延迟。异步编程模型的关键是将计算密集型任务分解为多个小任务，并将这些小任务分配给多个线程块，每个线程块执行一部分任务。每个线程块的执行结果可以被其他线程块使用，从而实现数据并行。在CUDA编程模型中，线程是进行计算或内存操作的最低抽象级别。从基于NVIDIA Ampere GPU架构的设备开始，CUDA编程模型通过异步编程模型提供对内存操作的加速。异步编程模型定义了异步操作相对于CUDA线程的行为。异步编程模型定义了用于CUDA线程之间同步的异步屏障的行为。该模型还解释并定义了在GPU中进行计算时，如何使用cuda:：memcpy_async从全局内存异步移动数据到设备内存，以及如何使用cuda：memcpy_dtoh从设备内存异步移动数据到全局内存。
+## 5.5.1 Asynchronous Operations异步操作
+异步操作被定义为由CUDA线程启动并像由另一个线程异步执行的操作。在格式良好的程序中，一个或多个CUDA线程与异步操作同步。启动异步操作的CUDA线程不需要在同步线程中。这样的异步线程（一个好像线程）总是与启动异步操作的CUDA线程相关联。异步操作使用同步对象来同步操作的完成。这样的同步对象可以由用户显式管理（例如，cuda:：memcpy_async），也可以在库内隐式管理（如，cooperative_groups:：memcpy_async）。同步对象可以是cuda:：barrier或cuda：：pipeline。在使用cuda:：pipeline的异步屏障和异步数据复制中详细解释了这些对象。这些同步对象可以在不同的线程作用域中使用。作用域定义了可以使用同步对象与异步操作同步的线程集。下表定义了CUDA C++中可用的线程作用域以及可以与每个作用域同步的线程。
+Thread Scope    | Description
+-------- | -----
+cuda::thread_scope::thread_scope_thread  | Only the CUDA thread which initiated asynchronous operations synchronizes.
+cuda::thread_scope::thread_scope_block| All or any CUDA threads within the same thread block as the initiating thread synchronizes.
+cuda::thread_scope::thread_scope_device| All or any CUDA threads in the same GPU device as the initiating thread synchronizes.
+cuda::thread_scope::thread_scope_system|All or any CUDA or CPU threads in the same system as the initiating thread synchronizes.
+# 5.6 Compute Capabilit计算能力
+设备的计算能力由版本号表示，有时也称为它的“SM 版本”。该版本号标识 GPU 硬件支持的特征，并在运行时应用程序使用，以确定当前 GPU 上可用的哪些硬件特征和/或指令。计算能力包括主要修订数 X 和次要修订数 Y，用 X 表示。Y。具有相同主要修订数的设备具有相同的核心架构。基于 NVIDIA Hopper GPU 架构的设备的主要修订数为 9，基于 NVIDIA Ampere GPU 架构的设备为 8，基于 Volta 架构的设备为 7，基于 Pascal 架构的设备为 6，基于 Maxwell 架构的设备为 5，基于开普勒架构的设备为 3。较小的修订数对应于对核心架构的增量改进，可能包括新功能。图灵是计算能力为7.5的设备的架构，是基于Volta架构的增量更新。支持CUDA的gpu列表，所有支持CUDA的设备及其计算能力。计算能力提供了每个计算能力的技术规范。

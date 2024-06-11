@@ -14,9 +14,9 @@ int main() {
     float B[N][N] = { {9, 8, 7}, {6, 5, 4}, {3, 2, 1} };
     float C[N][N];
     
-    int numThreads = 1;
-    dim3 blockDim(N, N);
-    MatAdd<<<numThreads, blockDim>>>(A, B, C);
+    int gridDim = 1;//定义网格中有一个block
+    dim3 blockDim(N, N);//定义一个block中有N*N个线程
+    MatAdd<<<gridDim, blockDim>>>(A, B, C);
     
     cudaDeviceSynchronize();//CUDA同步函数，执行完核函数后继续执行主机程序
     std::cout << "Matrix C:" << std::endl;
