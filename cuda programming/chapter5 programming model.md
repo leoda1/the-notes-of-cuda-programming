@@ -274,5 +274,6 @@ cuda::thread_scope::thread_scope_thread  | Only the CUDA thread which initiated 
 cuda::thread_scope::thread_scope_block| All or any CUDA threads within the same thread block as the initiating thread synchronizes.
 cuda::thread_scope::thread_scope_device| All or any CUDA threads in the same GPU device as the initiating thread synchronizes.
 cuda::thread_scope::thread_scope_system|All or any CUDA or CPU threads in the same system as the initiating thread synchronizes.
+
 # 5.6 Compute Capabilit计算能力
 设备的计算能力由版本号表示，有时也称为它的“SM 版本”。该版本号标识 GPU 硬件支持的特征，并在运行时应用程序使用，以确定当前 GPU 上可用的哪些硬件特征和/或指令。计算能力包括主要修订数 X 和次要修订数 Y，用 X 表示。Y。具有相同主要修订数的设备具有相同的核心架构。基于 NVIDIA Hopper GPU 架构的设备的主要修订数为 9，基于 NVIDIA Ampere GPU 架构的设备为 8，基于 Volta 架构的设备为 7，基于 Pascal 架构的设备为 6，基于 Maxwell 架构的设备为 5，基于开普勒架构的设备为 3。较小的修订数对应于对核心架构的增量改进，可能包括新功能。图灵是计算能力为7.5的设备的架构，是基于Volta架构的增量更新。支持CUDA的gpu列表，所有支持CUDA的设备及其计算能力。计算能力提供了每个计算能力的技术规范。
