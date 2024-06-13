@@ -1,6 +1,5 @@
-//kernal defination
 #include <cuda_runtime.h>
-#include <iostream>
+#include <stdio.h>
 #define N 3
 
 __global__ void cluster_kernel(float *input, float *output)
@@ -34,7 +33,6 @@ int main() {
     attribute[0].val.clusterDim.z = 1;
     config.attrs = attribute;
     config.numAttrs = 1;
-    
 
     void *args[] = { &input, &output };
     cudaLaunchKernelExC(&config, cluster_kernel, args);
@@ -43,9 +41,11 @@ int main() {
     float h_output[N];
     cudaMemcpy(h_output, input, N * sizeof(float), cudaMemcpyDeviceToHost);
     for (int i = 0; i < 3; ++i) {
-        std::cout << "Output[" << i << "] = " << h_output[i] << std::endl;
+        printf("Output[%d] = %f\n", i, h_output[i]);
     }
-
+    // for (int i = 0; i < 3; ++i) {
+    //     std::cout << "Output[" << i << "] = " << h_output[i] << std::endl;
+    // }
     // 清理设备内存
     cudaFree(input);
     cudaFree(output);
