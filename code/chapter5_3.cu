@@ -1,6 +1,7 @@
 #include<iostream>
-#include "../notes/code/common.cuh"
+#include "../code/common.cuh"
 
+/*
 __global__ void addGPU(float* a, float* b, float* c, const int N)
 {
     const int bid = blockIdx.x;
@@ -89,4 +90,31 @@ int main()
     free(b);
     free(c);
     return 0;
+}
+*/
+
+int main()
+{
+    //1.分配主机内存，并初始化
+    float *fpHost_A;
+    fpHost_A = (float *)malloc(4);
+    memset(fpHost_A, 0, 4);//初始化为0
+
+    //2.分配设备内存
+
+    float *fpDev_A;
+    cudaError_t err = ErrorCheck(cudaMalloc((float**)&fpDev_A, 4), __FILE__, __LINE__);
+    cudaMemset(fpDev_A, 0, 4);//*fpDev_A = 0;
+
+    //3.拷贝数据到设备内存
+    ErrorCheck(cudaMemcpy(fpDev_A, fpHost_A, 4, cudaMemcpyHostToDevice), __FILE__, __LINE__);
+
+    //释放主机和设备内存
+    free(fpHost_A);
+    ErrorCheck(cudaFree(fpDev_A), __FILE__, __LINE__);
+
+    ErrorCheck(cudaDeviceReset(), __FILE__, __LINE__);
+
+
+    return 0;  
 }

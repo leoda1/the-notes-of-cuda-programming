@@ -2,11 +2,14 @@
 #include<iostream>
 #include<stdlib.h>
 #include<stdio.h>
+#include<cuda_runtime.h>
+
+cudaError_t ErrorCheck(cudaError_t error_code, const char* filename, int lineNumber);
 
 //查看当前可用GPU设备数 并将可用device设置为0
 void setGPU(){
     int iDeviceCount = 0;
-    cudaError_t err = cudaGetDeviceCount(&iDeviceCount);
+    cudaError_t err = ErrorCheck(cudaGetDeviceCount(&iDeviceCount), __FILE__, __LINE__);
     if (err!= cudaSuccess || iDeviceCount == 0)
     {
         std::cout<< "No CUDA-capable device found." << std::endl;
@@ -18,7 +21,7 @@ void setGPU(){
     }
 
     int iDevice = 0;
-    err = cudaSetDevice(iDevice);
+    err = ErrorCheck(cudaSetDevice(iDevice), __FILE__, __LINE__);
     if( err != cudaSuccess)
     {
         std::cout << "Failed to set device " << iDevice << std::endl;
@@ -28,7 +31,6 @@ void setGPU(){
     {
         std::cout << "Device " << iDevice << " set successfully." << std::endl;
     }
-
 }
 
 //错误检查函数
