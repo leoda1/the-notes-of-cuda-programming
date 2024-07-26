@@ -10,12 +10,25 @@
 
 __global__ void add_matrix(int *a, int *b, int *c, const int nx, const int ny) 
 {
+    /* 2D网格二维/一维线程块计算二维矩阵加法 
     int ix = threadIdx.x + blockIdx.x * blockDim.x;
     int iy = threadIdx.y + blockIdx.y * blockDim.y;
     unsigned int idx = iy * nx + ix;
     if (ix < nx && iy < ny) {
         c[idx] = a[idx] + b[idx];
+    } */
+
+   /* 1D网格一维线程块计算二维矩阵加法 */
+    int ix= blockIdx.x * blockDim.x + threadIdx.x;;
+    if (ix < nx)
+    {
+        for (int iy = 0; iy < ny; iy ++)
+        {
+            int idx = iy * nx + ix;
+            c[idx] = a[idx] + b[idx];
+        }
     }
+
 }
 
 int main()
@@ -63,14 +76,16 @@ int main()
         exit(1);
     }
 
-    dim3 blockDim(4, 4);
-    dim3 gridDim((nx + blockDim.x - 1) / blockDim.x, (ny + blockDim.y - 1) / blockDim.y);
-    printf("Grid Dim: %d, %d\n", gridDim.x, gridDim.y);
-    printf("Block Dim: %d, %d\n", blockDim.x, blockDim.y);
+    dim3 block(4, 1);
+    // dim3 grid((nx + block.x - 1) / block.x, (ny + block.y - 1) / block.y);       //2Dgrid2Dblock
+    // dim3 grid((nx + block.x - 1) / block.x, ny);                                 //1Dgrid1Dblock
+    dim3 grid((nx + block.x -1) / block.x, 1);
+    printf("Grid: %d, %d\n", grid.x, grid.y);
+    printf("Block: %d, %d\n", block.x, block.y);
 
-    add_matrix<<<gridDim, blockDim>>>(ipDevice_A, ipDevice_B, ipDevice_C, nx, ny);
+    add_matrix<<<grid, block>>>(ipDevice_A, ipDevice_B, ipDevice_C, nx, ny);
     ErrorCheck(cudaMemcpy(ipHost_C, ipDevice_C, stBytesCount, cudaMemcpyDeviceToHost), __FILE__, __LINE__);
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 10; i++)
     {
         printf("id = %d, matrix_A = %d, matrix_B = %d, matrix_C = %d\n", i + 1, ipHost_A[i], ipHost_B[i], ipHost_C[i]);
     }
