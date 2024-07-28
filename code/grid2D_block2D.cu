@@ -97,3 +97,20 @@ int main()
     ErrorCheck(cudaFree(ipDevice_C), __FILE__, __LINE__);
     return 0;
 }
+
+/******************************************************************
+ * Number of CUDA-capable devices found: 1
+Device 0 set successfully.
+Grid: 4, 1
+Block: 4, 1
+id = 1, matrix_A = 0, matrix_B = 1, matrix_C = 1
+id = 2, matrix_A = 1, matrix_B = 2, matrix_C = 3
+id = 3, matrix_A = 2, matrix_B = 3, matrix_C = 5
+id = 4, matrix_A = 3, matrix_B = 4, matrix_C = 7
+id = 5, matrix_A = 4, matrix_B = 5, matrix_C = 9
+id = 6, matrix_A = 5, matrix_B = 6, matrix_C = 11
+id = 7, matrix_A = 6, matrix_B = 7, matrix_C = 13
+id = 8, matrix_A = 7, matrix_B = 8, matrix_C = 15
+id = 9, matrix_A = 8, matrix_B = 9, matrix_C = 17
+id = 10, matrix_A = 9, matrix_B = 10, matrix_C = 19
+ *****************************************************************/
