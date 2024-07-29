@@ -50,8 +50,8 @@ int main(int argc, char** argv)
 
     kernel<<<grid, block>>>(d_A, nElem);
     CUDA_CHECK(cudaFree(d_A));
-    CUDA_CHECK(cudaDeviceReset());
     free(p_A);
+    CUDA_CHECK(cudaDeviceReset());
 
     return 0;
 
