@@ -35,3 +35,10 @@ int main(int argc, char** argv)
     CUDA_CHECK(cudaDeviceReset());
     return 0;
 }
+
+/******************************************************************
+PS C:\Users\22681\Desktop\project\cudalearn> ./build/Debug/constant_memory.exe
+Device 0: NVIDIA GeForce RTX 4060 Laptop GPU
+constant data c_data = 3.30.
+constant data h_data = 6.60.
+ *****************************************************************/

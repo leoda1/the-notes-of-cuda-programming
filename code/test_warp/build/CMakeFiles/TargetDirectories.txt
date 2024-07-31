@@ -1,0 +1,3 @@
+C:/Users/22681/Desktop/project/cudalearn/test_warp/build/CMakeFiles/reduction.dir
+C:/Users/22681/Desktop/project/cudalearn/test_warp/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/22681/Desktop/project/cudalearn/test_warp/build/CMakeFiles/ZERO_CHECK.dir
