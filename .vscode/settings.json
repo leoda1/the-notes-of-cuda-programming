@@ -6,5 +6,21 @@
     "markdown.preview.lineHeight": 1.6,
     "markdown.preview.scrollPreviewWithEditor": true,
     "markdown.preview.scrollEditorWithPreview": true,
-    "markdown.preview.doubleClickToSwitchToEditor": true
+    "markdown.preview.doubleClickToSwitchToEditor": true,
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "vector": "cpp",
+        "forward_list": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "initializer_list": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "unordered_map": "cpp"
+    }
 }
