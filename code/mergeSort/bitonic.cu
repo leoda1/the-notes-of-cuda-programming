@@ -1,4 +1,4 @@
-
+//执行bitonic排序的函数和内核
 #include <cooperative_groups.h>
 
 namespace cg = cooperative_groups;
