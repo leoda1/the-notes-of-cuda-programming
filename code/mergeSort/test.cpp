@@ -1,30 +1,35 @@
 #include <iostream>
-using namespace std;
-const int N = 1000000;
-int n;
-int q[N], t[N];
-//归并排序cpu测试
-void mergeSort(int arr[], int l, int r)
-{
-    if(l >= r) return;
-    int mid = (l + r) >> 1;
-    mergeSort(arr, l, mid);
-    mergeSort(arr, mid + 1, r);
+#include <vector>
 
-    int k = 0, i = l, j = mid + 1;
-    while(i <= mid && j <= r){
-        if(arr[i] <= arr[j]) t[ k++ ] = arr[ i++ ];
-        else t[ k++ ] = arr[ j++ ];
+template<uint sortDir>
+void insertionSort(std::vector<int>& data){
+    for(size_t i = 1; i < data.size(); i++){
+        int key = data[i];
+        int j = i - 1;   // index of the last element in the sorted subarray
+        while(j >= 0 && ((sortDir == 1 && data[j] > key) || (sortDir == 0 && data[j] < key))){
+            data[j+1] = data[j];
+            j--;
+        }
+        data[j+1] = key;
     }
-    while(i <= mid) t[ k++ ] = arr[ i++ ];
-    while(j <= r) t[ k++ ] = arr[ j++ ];
-    for (i = l, j = 0; i <= r; i++, j++) arr[i] = t[j];
 }
 
-int main() {
-    cin >> n;
-    for (int i = 0; i < n; i++) cin >> q[i];
-    mergeSort(q, 0, n - 1);
-    for (int i = 0; i < n; i++) cout << q[i] << " ";
+int main(){
+    std::vector<int> data = {5, 3, 8, 6, 2, 7, 1, 4};
+    //asc
+    insertionSort<1>(data);
+    std::cout << "Ascending order :";
+    for (size_t i = 0; i < data.size(); i++) {
+        std::cout << " " << data[i];
+    }
+    std::cout << std::endl;
+    //desc
+    insertionSort<0>(data);
+    std::cout << "Descending order:";
+    for(size_t i = 0; i < data.size(); i++){
+        std::cout << " " << data[i];
+    }
+    std::cout << std::endl;
+
     return 0;
 }
