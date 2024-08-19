@@ -1,18 +1,47 @@
-# 英伟达《CUDA C++ Programming Guide》学习笔记
+## 前言
+愿望：希望自己能够将这个项目持续更新下去，从而能够帮助到更多的人。希望可以有更多人加入本项目分享和总结学习资料，一起维护，共同进步。
+
+初衷：是为了记录自己学习CUDA C++编程的过程，希望能够帮助到大家。但是过程中发现学习路径不是很多，资料大多是英文为主，而我主要通过bilibili和官方文档学习。下方目录结构中的code主要包括跟着官方的samples和各类b站up主的project复现，cuda_programming_guide是官方的pdf文档的阅读笔记。
+
 ## project_directory
 ```
 ├── code
-│   ├── xxxx.cu 文档内自己复现的代码
-│   ├── CMakeLists.txt 文档内的CMakeLists.txt文件
+│   ├── xxxxxxx 大项目的代码
+│   ├── xxxx.cu 小项目的代码
 │   ├── readme.md 文档内的readme文件
 ├── .vscode
 │   ├── settings.json 文档内的VSCode配置文件
-├── cuda_programming
+├── cuda_programming_guide 英伟达《CUDA C++ Programming Guide》官方文档的阅读笔记
 │   ├── img 存放书中插图
 │   ├── xxxxxx.md 存放书中每章的学习笔记
-```
-## Introduction
-This project is a record of my learning notes of the CUDA C++ Programming Guide book, version Release 12.4, published on April 22, 2024. The purpose of this project is to record my personal thoughts and insights during the learning process of CUDA C++ programming and to organize the content of the book, so that more people can better understand and master CUDA C++ programming.
+├── README.md 项目的readme文件
 
-## 介绍
-本项目记录了学习英伟达《CUDA C++ Programming Guide》官方文档的笔记，版本【Release 12.4】，出版时间为【2024年4月22日】。本项目旨在记录自己学习CUDA C++编程过程中的心得体会和代码复现，并整理文档内容，帮助大家更好地理解和掌握CUDA C++编程。
+```
+## How 2 install
+```sh
+git clone https://github.com/leoda1/the-notes-of-cuda-programming.git
+```
+## How 2 use
+这里写了blog记录了怎么用cmake运行，具体点这里[blog](https://blog.csdn.net/buuliuda/article/details/139101651?spm=1001.2014.3001.5502)。
+
+/code/xxx.cu的每个小项目只需terminal中
+```sh
+nvcc -o run xxx.cu
+./run
+```
+
+/code/xxx的每个大项目用的是cmake构建，所以需要
+```sh
+cmake -B build -G #这是cmake的命令，这里可以找到你现在vs的版本
+cmake -B build -G"Visual Studio 16 2019" #这是cmake的命令，具体看自己的系统
+cmake --build build #编译代码
+.\build\Debug\your_project.exe #运行Debug版本的可执行文件
+```
+
+## 参考资料
+- [CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)
+- [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/)
+- [NVIDIA CUDA Samples（官方在github上的项目，正在看）](https://github.com/NVIDIA/cuda-samples)
+- [b站权双对cuda的视频讲解（我看完了）](https://www.bilibili.com/video/BV1sM4y1x7of?vd_source=85c9ce6d49ba579156fb1b41d0e606b3)
+- [My CSDN（这里有些自己写的内容）](https://blog.csdn.net/buuliuda/category_12694574.html?spm=1001.2014.3001.5482)
+- [b站爱学习的阿噜 (正在选择性看)](https://www.bilibili.com/video/BV1Sq4y1K7K6?vd_source=85c9ce6d49ba579156fb1b41d0e606b3)
