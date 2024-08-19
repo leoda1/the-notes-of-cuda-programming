@@ -2,9 +2,9 @@
 #include <stdio.h>  //标准输入输出
 #include <stdlib.h> //提供内存分配、程序控制功能
 #include <cuda_runtime.h> //CUDA运行时库
-#include <helper_functions.h> 
-#include <helper_cuda.h> 
-#include "mergeSort_common.h"
+#include "../inc/helper_functions.h"
+#include "../inc/helper_cuda.h"
+#include "../inc/mergeSort_common.h"
 
 int main(int argc, char **argv) {
     uint *h_SrcKey, *h_SrcVal, *h_DstKey, *h_DstVal;                        // host memory

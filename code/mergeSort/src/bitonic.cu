@@ -1,11 +1,10 @@
 //执行bitonic排序的函数和内核
 #include <cooperative_groups.h>
-
+#define SAMPLE_STRIDE 128
 namespace cg = cooperative_groups;
 #include <helper_cuda.h>
 #include <assert.h>
-#include "mergeSort_common.h"
-
+#include "../inc/mergeSort_common.h"
 inline __device__ void Comparator(uint &keyA, uint &valA, uint &keyB,
                                   uint &valB, uint arrowDir) {
   uint t;

@@ -2,10 +2,9 @@
 #include <cooperative_groups.h>
 
 namespace cg = cooperative_groups;
-
+#define SAMPLE_STRIDE 128
 #include <helper_cuda.h>
-#include "mergeSort_common.h"
-//实现归并排序的GPU版本
+#include "../inc/mergeSort_common.h"
 ////////////////////////////////////////////////////////////////////////////////
 // Helper functions
 ////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +73,7 @@ static inline __device__ uint binarySearchExclusive(uint val, uint *data,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Bottom-level merge sort (binary search-based)底层归并排序（基于二分查找）
+// Bottom-level merge sort (binary search-based)
 ////////////////////////////////////////////////////////////////////////////////
 template <uint sortDir>
 __global__ void mergeSortSharedKernel(uint *d_DstKey, uint *d_DstVal,
@@ -138,7 +137,7 @@ static void mergeSortShared(uint *d_DstKey, uint *d_DstVal, uint *d_SrcKey,
 
   assert(SHARED_SIZE_LIMIT % arrayLength == 0);
   assert(((batchSize * arrayLength) % SHARED_SIZE_LIMIT) == 0);
-  uint blockCount = batchSize * arrayLength / SHARED_SIZE_LIMIT;//整批次数据可以被1024整除
+  uint blockCount = batchSize * arrayLength / SHARED_SIZE_LIMIT;
   uint threadCount = SHARED_SIZE_LIMIT / 2;
 
   if (sortDir) {
@@ -153,7 +152,7 @@ static void mergeSortShared(uint *d_DstKey, uint *d_DstVal, uint *d_SrcKey,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Merge step 1: generate sample ranks生成样本等级
+// Merge step 1: generate sample ranks
 ////////////////////////////////////////////////////////////////////////////////
 template <uint sortDir>
 __global__ void generateSampleRanksKernel(uint *d_RanksA, uint *d_RanksB,
@@ -211,7 +210,7 @@ static void generateSampleRanks(uint *d_RanksA, uint *d_RanksB, uint *d_SrcKey,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Merge step 2: generate sample ranks and indices生成样本等级和索引
+// Merge step 2: generate sample ranks and indices
 ////////////////////////////////////////////////////////////////////////////////
 __global__ void mergeRanksAndIndicesKernel(uint *d_Limits, uint *d_Ranks,
                                            uint stride, uint N,
@@ -268,7 +267,7 @@ static void mergeRanksAndIndices(uint *d_LimitsA, uint *d_LimitsB,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Merge step 3: merge elementary intervals归并元素间隔
+// Merge step 3: merge elementary intervals
 ////////////////////////////////////////////////////////////////////////////////
 template <uint sortDir>
 inline __device__ void merge(uint *dstKey, uint *dstVal, uint *srcAKey,
@@ -412,7 +411,7 @@ extern "C" void bitonicMergeElementaryIntervals(uint *d_DstKey, uint *d_DstVal,
                                                 uint N, uint sortDir);
 
 static uint *d_RanksA, *d_RanksB, *d_LimitsA, *d_LimitsB;
-static const uint MAX_SAMPLE_COUNT = 32768;                                   //MAX_SAMPLE_COUNT = 32KB
+static const uint MAX_SAMPLE_COUNT = 32768;
 
 extern "C" void initMergeSort(void) {
   checkCudaErrors(
@@ -435,55 +434,60 @@ extern "C" void closeMergeSort(void) {
 extern "C" void mergeSort(uint *d_DstKey, uint *d_DstVal, uint *d_BufKey,
                           uint *d_BufVal, uint *d_SrcKey, uint *d_SrcVal,
                           uint N, uint sortDir) {
-    uint stageCount = 0;
+  uint stageCount = 0;
 
-    for (uint stride = SHARED_SIZE_LIMIT; stride < N; stride <<= 1, stageCount++)
-      ;
+  for (uint stride = SHARED_SIZE_LIMIT; stride < N; stride <<= 1, stageCount++)
+    ;
 
-    uint *ikey, *ival, *okey, *oval;//根据stageCount奇偶性，将输入输出指针交换
-    if (stageCount & 1) {    // 如果为奇数
-      ikey = d_BufKey, ival = d_BufVal;
-      okey = d_DstKey, oval = d_DstVal;
-    } else {                 // 如果为偶数   
-      ikey = d_DstKey, ival = d_DstVal;
-      okey = d_BufKey, oval = d_BufVal;
+  uint *ikey, *ival, *okey, *oval;
+
+  if (stageCount & 1) {
+    ikey = d_BufKey;
+    ival = d_BufVal;
+    okey = d_DstKey;
+    oval = d_DstVal;
+  } else {
+    ikey = d_DstKey;
+    ival = d_DstVal;
+    okey = d_BufKey;
+    oval = d_BufVal;
+  }
+
+  assert(N <= (SAMPLE_STRIDE * MAX_SAMPLE_COUNT));
+  assert(N % SHARED_SIZE_LIMIT == 0);
+  mergeSortShared(ikey, ival, d_SrcKey, d_SrcVal, N / SHARED_SIZE_LIMIT,
+                  SHARED_SIZE_LIMIT, sortDir);
+
+  for (uint stride = SHARED_SIZE_LIMIT; stride < N; stride <<= 1) {
+    uint lastSegmentElements = N % (2 * stride);
+
+    // Find sample ranks and prepare for limiters merge
+    generateSampleRanks(d_RanksA, d_RanksB, ikey, stride, N, sortDir);
+
+    // Merge ranks and indices
+    mergeRanksAndIndices(d_LimitsA, d_LimitsB, d_RanksA, d_RanksB, stride, N);
+
+    // Merge elementary intervals
+    mergeElementaryIntervals(okey, oval, ikey, ival, d_LimitsA, d_LimitsB,
+                             stride, N, sortDir);
+
+    if (lastSegmentElements <= stride) {
+      // Last merge segment consists of a single array which just needs to be
+      // passed through
+      checkCudaErrors(cudaMemcpy(
+          okey + (N - lastSegmentElements), ikey + (N - lastSegmentElements),
+          lastSegmentElements * sizeof(uint), cudaMemcpyDeviceToDevice));
+      checkCudaErrors(cudaMemcpy(
+          oval + (N - lastSegmentElements), ival + (N - lastSegmentElements),
+          lastSegmentElements * sizeof(uint), cudaMemcpyDeviceToDevice));
     }
 
-    assert(N <= (SAMPLE_STRIDE * MAX_SAMPLE_COUNT));//确保元素的总数
-    assert(N % SHARED_SIZE_LIMIT == 0);
-    mergeSortShared(ikey, ival, d_SrcKey, d_SrcVal, N / SHARED_SIZE_LIMIT,
-                    SHARED_SIZE_LIMIT, sortDir);  // 调用mergeSortShared函数
-
-    for (uint stride = SHARED_SIZE_LIMIT; stride < N; stride <<= 1) {
-      uint lastSegmentElements = N % (2 * stride);
-
-      // Find sample ranks and prepare for limiters merge
-      generateSampleRanks(d_RanksA, d_RanksB, ikey, stride, N, sortDir);
-
-      // Merge ranks and indices
-      mergeRanksAndIndices(d_LimitsA, d_LimitsB, d_RanksA, d_RanksB, stride, N);
-
-      // Merge elementary intervals
-      mergeElementaryIntervals(okey, oval, ikey, ival, d_LimitsA, d_LimitsB,
-                              stride, N, sortDir);
-
-      if (lastSegmentElements <= stride) {
-        // Last merge segment consists of a single array which just needs to be
-        // passed through
-        checkCudaErrors(cudaMemcpy(
-            okey + (N - lastSegmentElements), ikey + (N - lastSegmentElements),
-            lastSegmentElements * sizeof(uint), cudaMemcpyDeviceToDevice));
-        checkCudaErrors(cudaMemcpy(
-            oval + (N - lastSegmentElements), ival + (N - lastSegmentElements),
-            lastSegmentElements * sizeof(uint), cudaMemcpyDeviceToDevice));
-      }
-
-      uint *t;
-      t = ikey;
-      ikey = okey;
-      okey = t;
-      t = ival;
-      ival = oval;
-      oval = t;
-    }
+    uint *t;
+    t = ikey;
+    ikey = okey;
+    okey = t;
+    t = ival;
+    ival = oval;
+    oval = t;
+  }
 }
