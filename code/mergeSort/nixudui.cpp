@@ -35,7 +35,7 @@ int main()
     for (int i = 0; i < n; i++) cout << q[i];
     return 0;
 }*/
-
+/*erfen.cpp
 #include <iostream>
 using namespace std;
 const int N = 100010;
@@ -62,10 +62,47 @@ int main(){
             while ( l < r){
                 int mid = l + r + 1 >> 1;
                 if ( q[mid] <= x ) l = mid;
-                else r = mid - 1; 
+                else r = mid - 1;
             }
             cout << l << endl;
         }
     }
     return 0;
+}*/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const int N = 1e6 + 10;
+//C = A + B
+vector<int> add(vector<int> &A, vector<int> &B)
+{
+    vector<int> C;
+    int t = 0;
+    for (int i = 0; i <A.size() || i < B.size(); i++)
+    {
+        if (i < A.size()) t += A[i];
+        if (i < B.size()) t += B[i];
+        C.push_back( t % 10);
+        t /= 10;
+    }
+    if (t) C.push_back(t);
+    return C;
+}
+
+int main()
+{
+    string a, b;
+    vector<int> A, B;
+    cin >> a >> b; // a = "123456" 
+    //push_back就是把元素放到vector的容器里， -'0'是为了把字符转化为数字
+    for (int i = a.size() - 1; i >= 0; i--) A.push_back(a[i] - '0');// A = [6, 5, 4, 3, 2, 1]
+    for (int i = b.size() - 1; i >= 0; i--) B.push_back(b[i] - '0');
+
+    auto C = add(A, B);
+    for (int i = C.size() - 1; i >= 0; i--) cout << C[i];
+    cout << endl;
+    return 0;
+
 }
