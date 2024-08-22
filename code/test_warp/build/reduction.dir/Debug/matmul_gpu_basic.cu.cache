@@ -4,8 +4,8 @@ AdditionalCompilerOptions=
 AdditionalDependencies=
 AdditionalDeps=
 AdditionalLibraryDirectories=
-AdditionalOptions= -O3 -arch=sm_86 -std=c++14 --generate-code=arch=compute_52,code=[compute_52,sm_52] -Xcompiler="/EHsc -Zi -Ob0"
-AdditionalOptions= -O3 -arch=sm_86 -std=c++14 --generate-code=arch=compute_52,code=[compute_52,sm_52] -Xcompiler="/EHsc -Zi -Ob0"
+AdditionalOptions= -std=c++14 --generate-code=arch=compute_52,code=[compute_52,sm_52] -Xcompiler="/EHsc -Zi -Ob0"
+AdditionalOptions= -std=c++14 --generate-code=arch=compute_52,code=[compute_52,sm_52] -Xcompiler="/EHsc -Zi -Ob0"
 CodeGeneration=
 CodeGeneration=
 CompileOut=reduction.dir\Debug\matmul_gpu_basic.obj
@@ -23,7 +23,7 @@ GenerateRelocatableDeviceCode=false
 GPUDebugInfo=false
 GPUDebugInfo=false
 HostDebugInfo=true
-Include=C:\Users\22681\Desktop\project\cudalearn\test_warp\inc
+Include=C:\Users\22681\Desktop\project\cudalearn\notes\code\test_warp\inc
 Inputs=
 InterleaveSourceInPTX=false
 Keep=false

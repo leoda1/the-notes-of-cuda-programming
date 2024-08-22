@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <cuda_runtime.h>
 #include <string>
-#include "utils.hpp"
-#include "timer.hpp"
-#include "reduce.hpp"
+#include "utils.hpp" //错误检查函数的头文件
+#include "timer.hpp" //记时函数
+#include "reduce.hpp"//CPU上的分化函数
 #include <cstring>
 #include <memory>
 #include <cmath>
@@ -14,11 +14,12 @@ int main(int argc, char** argv)
 {
     if (argc != 3)
     {
-        std::cout << "Usage: ./build/reduction [size] [block_size]" << std::endl;
+        std::cout << "Usage: ./build/reduction [size] [block_size]" << std::endl;//输出使用说明，告诉用户如何正确调用这个程序。
         return -1;
     }
     
-    Timer timer;
+    
+    Timer timer;//timer类实例化
     char str[100];
     int size       = std::stoi(argv[1]);
     int block_size = std::stoi(argv[2]);

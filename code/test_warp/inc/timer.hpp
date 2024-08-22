@@ -24,8 +24,7 @@ public:
     void duration_cpu(std::string msg); // 用于在CPU上测量时间间隔的函数，接受一个字符串消息作为参数
     void duration_gpu(std::string msg); // 用于在GPU上测量时间间隔的函数，接受一个字符串消息作为参数
 
-// 定义一个计时器类，用于记录和计算时间
-class Timer {
+
 private:
     // 记录CPU开始时间的时间点
     std::chrono::time_point<std::chrono::high_resolution_clock> _cStart;
@@ -50,5 +49,4 @@ void Timer::duration_cpu(std::string msg) {
 
     std::chrono::duration<double, span> time = _cStop - _cStart;
     LOG("%-40s uses %.6lf %s", msg.c_str(), time.count(), str.c_str());
- 
 }
