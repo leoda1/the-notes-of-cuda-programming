@@ -38,7 +38,7 @@
 using namespace std;
 
 int main(){
-    int a = 7;
-    cout << a / 10 << endl;
+    int a = -1;
+    cout << (a+10) % 10 << endl;
     return 0;
 }
