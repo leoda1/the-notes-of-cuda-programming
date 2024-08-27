@@ -77,8 +77,8 @@ int main(int argc, char** argv)
 }
 
 /******************************************************************
-PS C:\Users\22681\Desktop\project\cudalearn\test_warp> ./build/Release/reduction 33554432 512
-reduce in cpu, results: 16777216.000000  uses 13.787900 ms
-reduce in gpu with divergence, results: 16779780.000000      uses 21.777023 ms
-reduce in gpu without divergence, results: 16779780.000000   uses 20.462015 ms
+(joker) PS C:\Users\22681\Desktop\project\cudalearn\notes\code\test_warp> ./build/Debug/reduction.exe 33554432 512
+reduce in cpu, results: 16777216.000000  uses 52.933100 ms
+reduce in gpu with divergence, results: 16779780.000000      uses 19.392063 ms
+reduce in gpu without divergence, results: 16779780.000000   uses 18.935841 ms
  *****************************************************************/

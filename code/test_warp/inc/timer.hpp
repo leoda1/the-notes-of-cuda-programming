@@ -24,7 +24,6 @@ public:
     void duration_cpu(std::string msg); // 用于在CPU上测量时间间隔的函数，接受一个字符串消息作为参数
     void duration_gpu(std::string msg); // 用于在GPU上测量时间间隔的函数，接受一个字符串消息作为参数
 
-
 private:
     // 记录CPU开始时间的时间点
     std::chrono::time_point<std::chrono::high_resolution_clock> _cStart;
