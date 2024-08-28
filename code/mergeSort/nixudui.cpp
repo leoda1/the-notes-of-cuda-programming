@@ -231,7 +231,6 @@ int main()
     cout << r << endl;
     return 0;
 }*/
-
 /*前缀和
 #include <iostream>
 using namespace std;
