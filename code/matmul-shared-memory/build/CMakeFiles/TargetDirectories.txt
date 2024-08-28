@@ -1,0 +1,3 @@
+C:/Users/22681/Desktop/project/cudalearn/notes/code/matmul-shared-memory/build/CMakeFiles/matmul.dir
+C:/Users/22681/Desktop/project/cudalearn/notes/code/matmul-shared-memory/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/22681/Desktop/project/cudalearn/notes/code/matmul-shared-memory/build/CMakeFiles/ZERO_CHECK.dir

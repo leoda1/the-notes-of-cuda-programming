@@ -1,5 +1,7 @@
 #include <chrono>
 #include <ratio>
+#include <string>
+#include "cuda_runtime.h"
 
 class Timer {
 public:

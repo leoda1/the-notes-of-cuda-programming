@@ -1,6 +1,6 @@
 #include "cuda_runtime.h"
 #include "cuda.h"
-#include "utils.hpp"
+#include "../inc/utils.hpp"
 #include "stdio.h"
 
 __global__ void ReduceNeighboredWithDivergence(float* d_idata, float* d_odata, int size)

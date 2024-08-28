@@ -39,5 +39,6 @@ void Timer::stop_gpu(){
 void Timer::duration_gpu(std::string msg){
     CUDA_CHECK(cudaEventSynchronize(_gStart));
     CUDA_CHECK(cudaEventSynchronize(_gStop));
+    cudaEventElapsedTime(&_timeElasped, _gStart, _gStop);
     LOG("%-60s uses %.6lf ms", msg.c_str(), _timeElasped);
 }
