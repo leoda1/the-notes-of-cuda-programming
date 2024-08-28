@@ -1,5 +1,5 @@
 #include<iostream>
-#include "../code/common.cuh"
+#include "common.cuh"
 
 /*
 __global__ void addGPU(float* a, float* b, float* c, const int N)

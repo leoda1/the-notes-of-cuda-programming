@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 {
     int device_id = 0;
     cudaDeviceProp device_prop;
-    CUDA_CHECK(cudaGetDeviceProperties(&device_prop, device_id));
+    ErrorCheck(cudaGetDeviceProperties(&device_prop, device_id), __FILE__, __LINE__);
     std::cout << "Device name: " << device_prop.name << std::endl;
 
     int nElem = 64;
@@ -42,16 +42,16 @@ int main(int argc, char** argv)
         p_A[i] = float(i);
 
     float* d_A = nullptr;
-    CUDA_CHECK(cudaMalloc(&d_A, nBytes));
-    CUDA_CHECK(cudaMemcpy(d_A, p_A, nBytes, cudaMemcpyHostToDevice));
+    ErrorCheck(cudaMalloc(&d_A, nBytes), __FILE__, __LINE__);
+    ErrorCheck(cudaMemcpy(d_A, p_A, nBytes, cudaMemcpyHostToDevice), __FILE__, __LINE__);
 
     dim3 block(32);
     dim3 grid(2);
 
     kernel<<<grid, block>>>(d_A, nElem);
-    CUDA_CHECK(cudaFree(d_A));
+    ErrorCheck(cudaFree(d_A), __FILE__, __LINE__);
     free(p_A);
-    CUDA_CHECK(cudaDeviceReset());
+    ErrorCheck(cudaDeviceReset(), __FILE__, __LINE__);
 
     return 0;
 

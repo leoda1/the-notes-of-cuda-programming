@@ -6,7 +6,7 @@
  *****************************************************************/
 
 #include <stdio.h>
-#include "../cudalearn/tools/common.cuh"
+#include "common.cuh"
 
 __global__ void add_matrix(int *a, int *b, int *c, const int nx, const int ny) 
 {

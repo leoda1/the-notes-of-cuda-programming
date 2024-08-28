@@ -15,7 +15,7 @@ __global__ void kernel() {}
 int main() {
     int device_id = 0;
     cudaDeviceProp device_prop;
-    CUDA_CHECK(cudaGetDeviceProperties(&device_prop, device_id));
+    ErrorCheck(cudaGetDeviceProperties(&device_prop, device_id), __FILE__, __LINE__);
     printf("Device %d: %s\n", device_id, device_prop.name);
 
     if (device_prop.globalL1CacheSupported){
@@ -30,8 +30,8 @@ int main() {
     dim3 grid(1);
     kernel<<<grid, block>>>();
 
-    CUDA_CHECK(cudaDeviceSynchronize());
-    CUDA_CHECK(cudaDeviceReset());
+    ErrorCheck(cudaDeviceSynchronize(), __FILE__, __LINE__);
+    ErrorCheck(cudaDeviceReset(), __FILE__, __LINE__);
 
     return 0;
 }

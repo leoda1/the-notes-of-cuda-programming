@@ -65,7 +65,7 @@ int main()
     printf("PCI Device ID:                                  %d\n", 
             device_prop.pciDeviceID);
     
-    CUDA_CHECK(cudaDeviceReset());
+    cudaDeviceReset();
     
     return 0;
 }

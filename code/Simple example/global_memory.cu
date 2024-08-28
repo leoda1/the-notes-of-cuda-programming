@@ -7,7 +7,7 @@
 
 #include <cuda_runtime.h>
 #include <stdio.h>
-#include "../cudalearn/common.cuh"
+#include "common.cuh"
 
 __device__ int d_x = 1;
 __device__ int d_y[2]; 
@@ -23,21 +23,21 @@ int main(int argc, char** argv)
 {
     int device_id = 0;
     cudaDeviceProp device_prop;
-    CUDA_CHECK(cudaGetDeviceProperties(&device_prop, device_id));
+    ErrorCheck(cudaGetDeviceProperties(&device_prop, device_id), __FILE__, __LINE__);
 
     //std::cout << "运行时GPU设备:" << device_prop.name << std::endl;
     printf("the device of GPU: %s\n", device_prop.name);
 
     int h_y[2] = {10, 20};
-    CUDA_CHECK(cudaMemcpyToSymbol(d_y, h_y, sizeof(int) * 2));
+    ErrorCheck(cudaMemcpyToSymbol(d_y, h_y, sizeof(int) * 2));
 
     dim3 block(1);
     dim3 grid(1);
     kernel<<<grid, block>>>();
-    CUDA_CHECK(cudaDeviceSynchronize());
-    CUDA_CHECK(cudaMemcpyFromSymbol(h_y, d_y, sizeof(int) * 2));
+    ErrorCheck(cudaDeviceSynchronize(), __FILE__, __LINE__);
+    ErrorCheck(cudaMemcpyFromSymbol(h_y, d_y, sizeof(int) * 2), __FILE__, __LINE__);
     printf("h_y[0] = %d, h_y[1] = %d\n", h_y[0], h_y[1]);
 
-    CUDA_CHECK(cudaDeviceReset());
+    ErrorCheck(cudaDeviceReset(), __FILE__, __LINE__);
     return 0;
 }

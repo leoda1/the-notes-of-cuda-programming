@@ -1,7 +1,7 @@
 #include <cuda_runtime.h>
 #include <iostream>
 #include <stdio.h>
-#include "../notes/code/common.cuh"
+#include "common.cuh"
 
 #define NUM 10
 

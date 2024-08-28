@@ -6,7 +6,7 @@
  *****************************************************************/
 
 #include <stdio.h>
-#include "../cudalearn/tools/common.cuh"
+#include "common.cuh"
 
 int getSPcores(cudaDeviceProp deviceProp, const char** archName)
 {

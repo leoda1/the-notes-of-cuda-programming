@@ -19,20 +19,20 @@ int main(int argc, char** argv)
 {
     int device_id = 0;
     cudaDeviceProp device_prop;
-    CUDA_CHECK(cudaGetDeviceProperties(&device_prop, device_id));
+    ErrorCheck(cudaGetDeviceProperties(&device_prop, device_id), __FILE__, __LINE__);
     printf("Device %d: %s\n", device_id, device_prop.name);
 
     float h_data = 3.3f;
-    CUDA_CHECK(cudaMemcpyToSymbol(c_data, &h_data, sizeof(float)));
+    ErrorCheck(cudaMemcpyToSymbol(c_data, &h_data, sizeof(float)), __FILE__, __LINE__);
 
     dim3 block(1);
     dim3 grid(1);
     kernel_1<<<grid, block>>>();
-    CUDA_CHECK(cudaDeviceSynchronize());
-    CUDA_CHECK(cudaMemcpyFromSymbol(&h_data, c_data2, sizeof(float)));
+    ErrorCheck(cudaDeviceSynchronize(), __FILE__, __LINE__);
+    ErrorCheck(cudaMemcpyFromSymbol(&h_data, c_data2, sizeof(float)), __FILE__, __LINE__);
     printf("constant data h_data = %.2f.\n", h_data);
 
-    CUDA_CHECK(cudaDeviceReset());
+    ErrorCheck(cudaDeviceReset(), __FILE__, __LINE__);
     return 0;
 }
 
