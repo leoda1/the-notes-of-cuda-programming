@@ -38,7 +38,7 @@ void Matmul_device(float* M_host, float* N_host, float* P_host, int width, int b
     CUDA_CHECK(cudaMemcpy(P_host, P_device, size, cudaMemcpyDeviceToHost));
     //synchronize the device
     CUDA_CHECK(cudaDeviceSynchronize());
-    //check for errors
+    //check kernel errors
     LAST_KERNEL_CHECK();
     //free device memory
     CUDA_CHECK(cudaFree(M_device));
