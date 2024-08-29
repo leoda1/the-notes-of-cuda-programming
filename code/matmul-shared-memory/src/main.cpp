@@ -11,9 +11,9 @@ int seed;
 int main(){
     Timer timer;
 
-    int width = 768, low = 0, high = 1;
+    int width = 1<<12, low = 0, high = 1;
     int size = width * width;
-    int block_size = 32;
+    int block_size = 16;
     bool statMem = true;
     char str[100];
 
