@@ -64,7 +64,10 @@ __global__ void Matmul_shared_dynamic_kernel(float* M_device, float* N_device, f
     P_device[idx] = P_element;
 }   
 
-
+/*
+    使用Tiling技术
+    一个tile处理的就是block, 将一个矩阵分为多个小的tile
+*/
 void Matmul_shared_memory(float* M_host, float* N_host, float* P_host, int width, int blocksize, bool statMem)
 {
     int size = width * width * sizeof(float);

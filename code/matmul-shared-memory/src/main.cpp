@@ -58,8 +58,7 @@ int main(){
     std::sprintf(str, "matmul in gpu with dynamic shared memory)<<<%d, %d>>>",width / block_size, block_size);
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
-
-
+    
     free(h_matM);
     free(h_matN);
     free(h_matP);
