@@ -32,9 +32,9 @@ int main()
 
     /* GPU warmup*/
     timer.start_gpu();
-    
+    Matmul_device(h_M, h_N, h_P, width, block_size);
     timer.stop_gpu();
-
+    timer.duration_gpu("GPU warmup(use gpu):");
 
 
 

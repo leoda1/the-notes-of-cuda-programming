@@ -1,3 +1,5 @@
+#ifndef TIMER_HPP
+#define TIMER_HPP
 #include <chrono>
 #include <ratio>
 #include <string>
@@ -42,3 +44,4 @@ void Timer::duration_cpu(std::string msg){
     std::chrono::duration<double,span> time = _cStop - _cStart;
     LOG("%-40s uses %.6lf %s", msg.c_str(), time.count(), str.c_str());
 }
+#endif // TIMER_HPP
