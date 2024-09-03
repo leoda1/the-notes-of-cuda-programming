@@ -1,0 +1,10 @@
+^C:\USERS\22681\DESKTOP\PROJECT\CUDALEARN\NOTES\CODE\SHARED_CONFICT\BUILD\CMAKEFILES\D8110974C7CD7B71BF87123B4626A02A\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict -BC:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict/build/shared_conflict.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

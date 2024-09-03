@@ -14,7 +14,8 @@ int main()
     int low = 0, high = 1;
 
     int block_size = 16;
-    bool stateMem = true;
+    bool staticMem = true;
+    bool bank_conflict = false;
     char str[100];
     int seed = 0;
 
@@ -36,18 +37,59 @@ int main()
     timer.stop_gpu();
     timer.duration_gpu("GPU warmup(use gpu):");
 
+    /* GPU matmul with shared memory */
+    timer.start_gpu();
+    Matmul_device_shared(h_M, h_N, d_P, width, block_size, staticMem, bank_conflict);
+    timer.stop_gpu();
+    std::sprintf(str, "matmul in GPU with static shared memory");
+    timer.duration_gpu(str);
 
+    /* GPU matmul with static and bank confict shared memory */
+    timer.start_gpu();
+    bank_conflict = true;
+    Matmul_device_shared(h_M, h_N, d_P, width, block_size, staticMem, bank_conflict);
+    timer.stop_gpu();
+    std::sprintf(str, "matmul in GPU with static and bank confict shared memory");
+    timer.duration_gpu(str);
 
+    /* GPU matmul with static and pad resolve bank confict shared memory */
+    // timer.start_gpu();
+    // bank_conflict = true;
+    // Matmul_device_shared(h_M, h_N, d_P, width, block_size, staticMem, bank_conflict);
+    // timer.stop_gpu();
+    // std::sprintf(str, "matmul in GPU with static and pad resolve bank confict shared memory");
+    // timer.duration_gpu(str);
 
+    /* GPU matmul with dynamic shared memory */
+    timer.start_gpu();
+    bank_conflict = false, staticMem = false;
+    Matmul_device_shared(h_M, h_N, d_P, width, block_size, staticMem, bank_conflict);
+    timer.stop_gpu();
+    std::sprintf(str, "matmul in GPU with dynamic shared memory");
+    timer.duration_gpu(str);
+    
 
+    /* GPU matmul with dynamic and bank confict shared memory */
+    timer.start_gpu();
+    bank_conflict = true, staticMem = false;
+    Matmul_device_shared(h_M, h_N, d_P, width, block_size, staticMem, bank_conflict);
+    timer.stop_gpu();
+    std::sprintf(str, "matmul in GPU with dynamic and bank confict shared memory");
+    timer.duration_gpu(str);
 
+    /* GPU matmul with dynamic and pad resolve bank confict shared memory */
+    // timer.start_gpu();
+    // bank_conflict = true, staticMem = false;
+    // Matmul_device_shared(h_M, h_N, d_P, width, block_size, staticMem, bank_conflict);
+    // timer.stop_gpu();
+    // std::sprintf(str, "matmul in GPU with dynamic and pad resolve bank confict shared memory");
+    // timer.duration_gpu(str);
 
+    free(d_P);
+    free(h_P);
+    free(h_N);
+    free(h_M);
 
-
-
-
-
-
-
+    return 0;
 
 }

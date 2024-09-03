@@ -1,0 +1,10 @@
+^C:\USERS\22681\DESKTOP\PROJECT\CUDALEARN\NOTES\CODE\SHARED_CONFICT\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict -BC:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict/build --check-stamp-file C:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

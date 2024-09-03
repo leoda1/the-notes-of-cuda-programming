@@ -1,0 +1,3 @@
+C:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict/build/CMakeFiles/shared_conflict.dir
+C:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/22681/Desktop/project/cudalearn/notes/code/shared_confict/build/CMakeFiles/ZERO_CHECK.dir
