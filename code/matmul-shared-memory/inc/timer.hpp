@@ -25,8 +25,7 @@ public:
 private:
     std::chrono::time_point<std::chrono::high_resolution_clock> _cStart;
     std::chrono::time_point<std::chrono::high_resolution_clock> _cStop;
-    cudaEvent_t _gStart;
-    cudaEvent_t _gStop;
+    cudaEvent_t _gStart, _gStop;
     float _timeElasped;
 };
 
