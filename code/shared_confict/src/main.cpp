@@ -84,7 +84,6 @@ int main()
     // timer.stop_gpu();
     // std::sprintf(str, "matmul in GPU with dynamic and pad resolve bank confict shared memory");
     // timer.duration_gpu(str);
-
     free(d_P);
     free(h_P);
     free(h_N);
