@@ -255,7 +255,7 @@ int main()
 }*/
 
 
-/*子矩阵 sub of matrix*/
+/*子矩阵 sub of matrix
 #include <iostream>
 using namespace std;
 const int N = 10010;
@@ -279,5 +279,40 @@ int main()
         scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
         printf("%d\n", sum[x2][y2] - sum[x2][y1 - 1] - sum[x1 - 1][y2] + sum[x1 - 1][y1 - 1]);
     }
+    return 0;
+}*/
+
+
+/*差分*/
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+const int N = 100010;
+int a[N], b[N];
+
+void insert(int l, int r, int x)
+{
+    b[l] += x;
+    b[r + 1] -= x;
+}
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
+    for (int i = 1; i <= n; i++)
+        insert(i, i, a[i]);
+    while(m--){
+        int l, r, x;
+        scanf("%d%d%d", &l, &r, &x);
+        insert(l, r, x);
+    }
+    for (int i = 1; i <= n; i++)
+        b[i] += b[i - 1];
+    for (int i = 1; i <= n; i++)
+        cout << b[i] << " ";
     return 0;
 }
