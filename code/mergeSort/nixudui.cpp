@@ -283,7 +283,7 @@ int main()
 }*/
 
 
-/*差分*/
+/*差分
 #include <iostream>
 #include <stdio.h>
 using namespace std;
@@ -315,4 +315,4 @@ int main()
     for (int i = 1; i <= n; i++)
         cout << b[i] << " ";
     return 0;
-}
+}*/
