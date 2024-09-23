@@ -317,8 +317,10 @@ int main()
     return 0;
 }*/
 
-/*差分矩阵*/
+/*差分矩阵
 #include<iostream>
+#include<stdio.h>
+
 const int N = 10010;
 using namespace std;
 int a[N][N] = {0}, b[N][N]= {0}, q[N] = {0};
@@ -336,7 +338,7 @@ int main()
     cin >> n >> m >> q;
     for (int i = 1; i<= n; i++){
         for (int j = 1; j<= m; j++){
-            cin >> a[i][j];
+            scanf("%d", &a[i][j]);
             insert(i, j, i, j, a[i][j]);
         }
     }
@@ -348,13 +350,11 @@ int main()
     for (int i = 1; i<= n; i++){
         for (int j = 1; j<= m; j++){
             b[i][j] += b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1];
-            printf("%d ", b[i][j]);
         }
     }
     for (int i = 1; i<= n; i++){
-        for (int j = 1; j<= m; j++){
-           cout >> b[i][j];
-        }
+        for (int j = 1; j<= m; j++) printf("%d ", b[i][j]);
+        puts("");
     }
     return 0;
-}
+}*/
