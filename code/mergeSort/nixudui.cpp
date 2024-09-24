@@ -311,7 +311,7 @@ int main()
         insert(l, r, x);
     }
     for (int i = 1; i <= n; i++)
-        b[i] += b[i - 1];
+        b[i] += b[i - 1];//前缀和
     for (int i = 1; i <= n; i++)
         cout << b[i] << " ";
     return 0;
@@ -327,8 +327,8 @@ int a[N][N] = {0}, b[N][N]= {0}, q[N] = {0};
 void insert(int x1, int y1, int x2, int y2, int c)
 {
     b[x1][y1] += c;
-    b[x1][y2 + 1] -= c;
     b[x2 + 1][y1] -= c;
+    b[x1][y2 + 1] -= c;
     b[x2 + 1][y2 + 1] += c;
 
 }
