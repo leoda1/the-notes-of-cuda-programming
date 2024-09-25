@@ -6,12 +6,18 @@
 ## project_directory
 ```
 ├── code
-│   ├── xxxxxxx 大项目的代码
-│   ├── xxxx.cu 小项目的代码
-│   ├── readme.md 文档内的readme文件
+│   ├── CUDA
+|   |    ├──1.1 Simple example
+|   |    ├──1.2 Test_warp
+|   |    ├──1.3 MergeSort
+|   |    ├──1.4 Matmul_shared_memory
+|   |    ├──1.5 Shared_conflict
+│   ├── TensorRT
+|   |    ├──2.1 Generate-onnx
+|   |    ├──2.2 Export-onnx
 ├── .vscode
 │   ├── settings.json 文档内的VSCode配置文件
-├── cuda_programming_guide 英伟达《CUDA C++ Programming Guide》官方文档的阅读笔记
+├── cuda_programming notes 英伟达《CUDA C++ Programming Guide》官方文档的阅读笔记
 │   ├── img 存放书中插图
 │   ├── xxxxxx.md 存放书中每章的学习笔记
 ├── README.md 项目的readme文件
@@ -22,21 +28,21 @@
 git clone https://github.com/leoda1/the-notes-of-cuda-programming.git
 ```
 ## How 2 use
-这里写了blog记录了怎么用cmake运行，具体点这里[blog](https://blog.csdn.net/buuliuda/article/details/139101651?spm=1001.2014.3001.5502)。
-
-/code/xxx.cu的每个小项目只需terminal中
+eg：
+/code/CUDA/Simple example/GPU_Cache.cu 在terminal中
 ```sh
-nvcc -o run xxx.cu
-./run
+nvcc GPU_Cache.cu -o name
+./name
 ```
-
-/code/xxx的每个大项目用的是cmake构建，所以需要
+eg:
+/code/CUDA/Test_warp用的是cmake构建，按照下面指令运行
 ```sh
 cmake -B build -G #这是cmake的命令，这里可以找到你现在vs的版本
 cmake -B build -G"Visual Studio 16 2019" #这是cmake的命令，具体看自己的系统
 cmake --build build #编译代码
 .\build\Debug\your_project.exe #运行Debug版本的可执行文件
 ```
+这里写了blog记录了怎么用cmake运行，具体点这里[blog](https://blog.csdn.net/buuliuda/article/details/139101651?spm=1001.2014.3001.5502)。
 
 ## 参考资料
 - [CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)

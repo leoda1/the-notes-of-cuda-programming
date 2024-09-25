@@ -2,8 +2,6 @@ import torch
 import torch.nn as nn
 import torch.onnx
 
-import tensorrt
-print("TensorRT version:", tensorrt.__version__)
 class Model(torch.nn.Module):
     def __init__(self, in_features, out_features, weights, bias=False):
         super().__init__()
@@ -35,10 +33,9 @@ def export_onnx():
         [3, 4, 5, 6]
     ],dtype=torch.float32)
     model   = Model(4, 3, weights)
-    model.eval() #添加eval防止权重继续更新
+    model.eval() #添加eval防止权重继续更新,进入推理状态
 
     # pytorch导出onnx的方式，参数有很多，也可以支持动态size
-    # 我们先做一些最基本的导出，从netron学习一下导出的onnx都有那些东西
     torch.onnx.export(
         model         = model, 
         args          = (input,),
