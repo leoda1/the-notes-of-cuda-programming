@@ -38,7 +38,6 @@ def export_norm_onnx(model, file, input):
 def main(dir):
     input = torch.rand(1, 3, 224, 224, device='cuda')
     model_types = ["resnet", "vgg", "mobilenet", "efficientnet", "efficientnetv2", "regnet", "shufflenetV2"]
-    
     for model_type in model_types:
         model, filename = get_model(model_type)
         full_path = os.path.join(dir, filename)
