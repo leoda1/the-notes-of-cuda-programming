@@ -42,7 +42,7 @@ def export_onnx():
         f             = "models/example.onnx",
         input_names   = ["input0"],
         output_names  = ["output0"],
-        opset_version = 12)
+        opset_version = 12) # https://github.com/onnx/onnx/blob/8a25e311671c2aeb28f0d0c7f6110cf855fd7894/docs/Operators.md
     print("Finished onnx export")
 
 

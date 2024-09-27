@@ -27,4 +27,4 @@ def export_norm_onnx():
     print("Finished exporting normal ONNX model")
 
 if __name__ == '__main__':
-    export_norm_onnx()    
+    export_norm_onnx()
