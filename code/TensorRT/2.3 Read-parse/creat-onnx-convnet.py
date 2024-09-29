@@ -122,5 +122,6 @@ def main():
     print("Successfully created {}.onnx".format(graph.name))
     onnx.save(model, "models/convnet-sample.onnx") # 保存模型
 
+
 if __name__ == "__main__":
     main()

@@ -27,7 +27,6 @@ def create_onnx_model():
     model = helper.make_model(graph)
     #检查model是否有错误
     onnx.checker.check_model(model)
-    #print(model)
     #save model
     onnx.save(model, "models/sample-linear.onnx")
     return model
