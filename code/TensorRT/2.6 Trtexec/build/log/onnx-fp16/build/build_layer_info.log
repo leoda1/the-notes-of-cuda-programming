@@ -1,0 +1,120 @@
+{"Layers": [{
+  "Name": "Reformatting CopyNode for Input Tensor 0 to conv2d + BatchNormal + relu",
+  "LayerType": "Reformat",
+  "Inputs": [
+  {
+    "Name": "input",
+    "Location": "Device",
+    "Dimensions": [1,3,224,224],
+    "Format/Datatype": "Row major linear FP32"
+  }],
+  "Outputs": [
+  {
+    "Name": "Reformatted Input Tensor 0 to conv2d + BatchNormal + relu",
+    "Location": "Device",
+    "Dimensions": [1,3,224,224],
+    "Format/Datatype": "Channel major FP16 format where channel % 8 == 0"
+  }],
+  "ParameterType": "Reformat",
+  "Origin": "REFORMAT",
+  "TacticValue": "0x0000000000000000",
+  "StreamId": 0,
+  "Metadata": ""
+},{
+  "Name": "conv2d + BatchNormal + relu",
+  "LayerType": "CaskConvolution",
+  "Inputs": [
+  {
+    "Name": "Reformatted Input Tensor 0 to conv2d + BatchNormal + relu",
+    "Location": "Device",
+    "Dimensions": [1,3,224,224],
+    "Format/Datatype": "Channel major FP16 format where channel % 8 == 0"
+  }],
+  "Outputs": [
+  {
+    "Name": "relu_output",
+    "Location": "Device",
+    "Dimensions": [1,16,224,224],
+    "Format/Datatype": "Channel major FP16 format where channel % 8 == 0"
+  }],
+  "ParameterType": "Convolution",
+  "Kernel": [3,3],
+  "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+  "PrePadding": [1,1],
+  "PostPadding": [1,1],
+  "Stride": [1,1],
+  "Dilation": [1,1],
+  "OutMaps": 16,
+  "Groups": 1,
+  "Weights": {"Type": "Half", "Count": 432},
+  "Bias": {"Type": "Half", "Count": 16},
+  "HasBias": 1,
+  "HasReLU": 1,
+  "HasSparseWeights": 0,
+  "HasDynamicFilter": 0,
+  "HasDynamicBias": 0,
+  "HasResidual": 0,
+  "ConvXAsActInputIdx": -1,
+  "BiasAsActInputIdx": -1,
+  "ResAsActInputIdx": -1,
+  "Activation": "RELU",
+  "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x32_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8",
+  "TacticValue": "0xfbf5ea2d8a6293cd",
+  "StreamId": 0,
+  "Metadata": "[ONNX Layer: conv2d]\u001e[ONNX Layer: BatchNormal]\u001e[ONNX Layer: relu]"
+},{
+  "Name": "avgpool",
+  "LayerType": "CaskPooling",
+  "Inputs": [
+  {
+    "Name": "relu_output",
+    "Location": "Device",
+    "Dimensions": [1,16,224,224],
+    "Format/Datatype": "Channel major FP16 format where channel % 8 == 0"
+  }],
+  "Outputs": [
+  {
+    "Name": "Reformatted Output Tensor 0 to avgpool",
+    "Location": "Device",
+    "Dimensions": [1,16,1,1],
+    "Format/Datatype": "Channel major FP16 format where channel % 8 == 0"
+  }],
+  "ParameterType": "Pooling",
+  "PoolingType": "AVERAGE",
+  "WindowSize": [224,224],
+  "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+  "PrePadding": [0,0],
+  "PostPadding": [0,0],
+  "Stride": [1,1],
+  "BlendFactor": 0,
+  "AverageCountExcludesPadding": 1,
+  "TacticName": "sm50_xmma_pooling_fw_4d_FP16FP32NHWC_Average_FastDiv_CAlign4",
+  "TacticValue": "0x56d7b61f084f251e",
+  "StreamId": 0,
+  "Metadata": "[ONNX Layer: avgpool]"
+},{
+  "Name": "Reformatting CopyNode for Output Tensor 0 to avgpool",
+  "LayerType": "Reformat",
+  "Inputs": [
+  {
+    "Name": "Reformatted Output Tensor 0 to avgpool",
+    "Location": "Device",
+    "Dimensions": [1,16,1,1],
+    "Format/Datatype": "Channel major FP16 format where channel % 8 == 0"
+  }],
+  "Outputs": [
+  {
+    "Name": "output",
+    "Location": "Device",
+    "Dimensions": [1,16,1,1],
+    "Format/Datatype": "Row major linear FP32"
+  }],
+  "ParameterType": "Reformat",
+  "Origin": "REFORMAT",
+  "TacticValue": "0x00000000000003e8",
+  "StreamId": 0,
+  "Metadata": ""
+}],
+"Bindings": ["input"
+,"output"
+]}

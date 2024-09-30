@@ -1,0 +1,7 @@
+[
+  { "count" : 18484 }
+, { "name" : "Reformatting CopyNode for Input Tensor 0 to conv2d + BatchNormal + relu", "timeMs" : 119.08, "averageMs" : 0.00644232, "medianMs" : 0.006144, "percentage" : 13.1439 }
+, { "name" : "conv2d + BatchNormal + relu", "timeMs" : 231.09, "averageMs" : 0.0125022, "medianMs" : 0.012288, "percentage" : 25.5074 }
+, { "name" : "avgpool", "timeMs" : 480.237, "averageMs" : 0.0259812, "medianMs" : 0.0256, "percentage" : 53.0079 }
+, { "name" : "Reformatting CopyNode for Output Tensor 0 to avgpool", "timeMs" : 75.5659, "averageMs" : 0.00408818, "medianMs" : 0.004096, "percentage" : 8.34086 }
+]
