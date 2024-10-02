@@ -12,24 +12,32 @@
 #include <iostream>
 #include <sstream>
 
-using namespace nvinfer1;
+// using namespace nvinfer1;
 using samplesCommon::SampleUniquePtr;
 
 class SampleOnnxMNIST
 {
-public:
-    SampleOnnxMNIST(const samplesCommon::OnnxSampleParams& params)
-        : mParams(params)
-        , mEngine(nullptr)
-    {
-    }
-    bool build();
-    bool infer();
+
 };
+
+void printHelpInfo()
+{
+
+}
 
 int main(int argc, char** argv)
 {
     // get onnx -> parse onnx to generate engine -> inference -> print result
     samplesCommon::Args args;
+    bool argsOK = samplesCommon::parseArgs(args, argc, argv);
+    if (!argsOK)
+    {
+        sample::gLogError << "Invalid arguments" << std::endl;
+        printHelpInfo();
+        return EXIT_FAILURE;
+    }
+
+
+
 
 }
