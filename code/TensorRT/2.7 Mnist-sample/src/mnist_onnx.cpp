@@ -15,6 +15,18 @@
 using namespace nvinfer1;
 using samplesCommon::SampleUniquePtr;
 
+class SampleOnnxMNIST
+{
+public:
+    SampleOnnxMNIST(const samplesCommon::OnnxSampleParams& params)
+        : mParams(params)
+        , mEngine(nullptr)
+    {
+    }
+    bool build();
+    bool infer();
+};
+
 int main(int argc, char** argv)
 {
     // get onnx -> parse onnx to generate engine -> inference -> print result
