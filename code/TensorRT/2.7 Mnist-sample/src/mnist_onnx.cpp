@@ -14,6 +14,7 @@
 
 // using namespace nvinfer1;
 using samplesCommon::SampleUniquePtr;
+const std::string gSampleName = "TensorRT.sample_onnx_mnist_cn";
 
 class SampleOnnxMNIST
 {
@@ -36,7 +37,16 @@ int main(int argc, char** argv)
         printHelpInfo();
         return EXIT_FAILURE;
     }
+    if (args.help)
+    {
+        printHelpInfo();
+        return EXIT_FAILURE;
+    }
 
+    // create logger
+    auto sampleTest = sample::gLogger.defineTest(gSampleName, argc, argv);
+    sample::gLogger.reportTestStart(sampleTest);
+    
 
 
 
