@@ -18,7 +18,30 @@ const std::string gSampleName = "TensorRT.sample_onnx_mnist_cn";
 
 class SampleOnnxMNIST
 {
+public:
+    SampleOnnxMNIST(const samplesCommon::OnnxSampleParams& params)
+        : mParams(params)
+        , mEngine(nullptr)
+    {}
+    bool build();
+    bool infer();
+private:
+    samplesCommon::OnnxSampleParams mParams;
+    nvinfer1::Dims                  mInputDims;
+    nvinfer1::Dims                  mOutputDims;
+    int mNumber{0};
 
+    /* use smartpointers to point the engine */
+    std::shared_ptr<nvinfer1::ICudaEngine> mEngine;
+    /* create grid */
+    bool constructNetwork(
+        SampleUniquePtr<nvinfer1::IBuilder>& builder,
+        SampleUniquePtr<nvinfer1::INetworkDefinition>& network,
+        SampleUniquePtr<nvinfer1::IBuilderConfig>& config,
+        SampleUniquePtr<nvonnxparser::IParser>& parser);
+
+    bool processInput(const samplesCommon::BufferManager& buffers);
+    bool verifyOutput(const samplesCommon::BufferManager& buffers);
 };
 
 void printHelpInfo()
@@ -46,7 +69,10 @@ int main(int argc, char** argv)
     // create logger
     auto sampleTest = sample::gLogger.defineTest(gSampleName, argc, argv);
     sample::gLogger.reportTestStart(sampleTest);
-    
+
+    //create sample object
+    SampleOnnxMNIST sample(initializeSampleParams(args));
+
 
 
 
