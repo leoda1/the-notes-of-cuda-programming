@@ -359,7 +359,7 @@ int main()
     return 0;
 }*/
 
-/*最长连续不重复子序列*/
+/*最长连续不重复子序列
 #include <iostream>
 #include <stdio.h>
 
@@ -382,4 +382,76 @@ int main()
     }
     cout << res << endl;
     return 0;
-}
+}*/
+
+/* array elements sum 
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+const int N = 10010;
+int A[N], B[N];
+
+int main()
+{
+    int n, m, x;
+    cin >> n >> m >> x;
+    for (int i = 0; i < n; i++) scanf("%d", &A[i]);
+    for (int j = 0; j < m; j++) scanf("%d", &B[j]);
+    // 原本 O(N ^2) complexity
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < m; j++)
+    //     {
+    //         if (A[i]+B[j] == x)
+    //         {
+    //             printf("%d %d\n", i, j);
+    //         }
+    //     }
+    // }
+    for (int i = 0, j = m - 1; i < n; i ++)
+    {
+        while (j >= 0 && A[i] + B[j] > x) j --;
+        if ( j >= 0 && A[i] + B[j] == x)
+        {
+            cout << i << " " << j << endl;
+        }
+    }
+    return 0;
+}*/
+
+/* array elements sum 2
+#include <iostream>
+using namespace std;
+
+const int N = 10010;
+int A[N], B[N];
+
+int main()
+{
+    int n, m, x;
+    std::cin >> n >> m >> x;
+    for (int i = 0; i < n; i++) cin >> A[i];
+    for (int j = 0; j < m; j++) cin >> B[j];
+    
+    int i = 0, j = m - 1;
+    while (i < n && j >= 0)
+    {
+        int sum = A[i] + B[j];
+        if (sum == x)
+        {
+            std::cout << i << " " << j << endl;
+            i++;
+            j--;
+        }
+        else if (sum < x)
+        {
+            i++;
+        }
+        else
+        {
+            j--;
+        }
+    }
+    return 0;
+}*/
