@@ -73,6 +73,8 @@ int main(int argc, char** argv)
     //create sample object
     SampleOnnxMNIST sample(initializeSampleParams(args));
 
+    sample::gLogInfo << "Building and running a GPU inference engine for Onnx MNIST" << std::endl;
+
 
 
 
