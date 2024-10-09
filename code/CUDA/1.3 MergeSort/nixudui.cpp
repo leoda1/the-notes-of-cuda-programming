@@ -455,3 +455,56 @@ int main()
     }
     return 0;
 }*/
+
+/* 判断子序列 
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+const int N = 100010;
+int a[N], b[N];
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < n; i++) cin >> a[i];
+    for (int j = 0; j < m; j++) cin >> b[j];
+    int i = 0, j = 0;
+    while (i < n && j < m)
+    {
+        if(a[i] == b[j]) i ++;
+        j ++;
+    }
+    if (i ==n) puts("Yes");
+    else puts("No");
+    return 0;
+} */
+
+/* 二进制中1的个数 
+// n的二进制中看k位是几     n >> k & 1 
+// lowbit(X):返回x的最低位的1的位置，即x & (-x)
+#include <iostream>
+using namespace std;
+const int N = 100010;
+
+int lowbit( int x)
+{
+    return x & -x;
+}
+
+int main()
+{
+    int n, x;
+    cin >> n;
+    for (int i = 0; i < n; i++ ){
+        cin >> x;
+        int res = 0;
+        while (x){
+            x -= lowbit(x);
+            res ++;
+        }
+        cout << res << ' ';
+    }
+    return 0;
+}*/
