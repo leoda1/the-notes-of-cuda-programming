@@ -509,6 +509,7 @@ int main()
     return 0;
 }*/
 
+/* 离散化 
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -562,5 +563,47 @@ int main()
         printf("%d\n", s[r] - s[l-1]);
     }
 
+    return 0;
+}*/
+
+/* 区间合并 */
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+typedef pair<int ,int> PII;
+vector<PII> alls;
+int n;
+const int N = 100010;
+
+void merge(vector<PII> &alls)
+{
+    vector<PII> res;
+    sort(alls.begin(), alls.end());
+    int st = -2e9, ed =-2e9;
+    for ( auto all : alls){
+        if ( all.first > ed ){
+            if (st != -2e9) res.push_back({st, ed});
+            st = all.first;
+            ed = all.second;
+        }
+        else ed = max(ed, all.second);
+    }
+    if (st != -2e9) res.push_back({st, ed});
+    alls = res;
+}
+
+
+int main()
+{
+    cin >> n;
+    for ( int i = 0; i < n; i++){
+        int l, r, c;
+        cin >> l >> r;
+        alls.push_back({l, r});
+    }
+    merge(alls);
+    cout << alls.size() << endl;
     return 0;
 }
