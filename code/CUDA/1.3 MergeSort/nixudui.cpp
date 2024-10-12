@@ -667,4 +667,14 @@ int main(){
     cout << endl;
 
     return 0;
-}
+} */
+
+/* 单链表
+#include <iostream>
+
+using namespace std;
+
+const int N = 100010;
+
+int m;
+int e[N], l[N], r[N], idx;
