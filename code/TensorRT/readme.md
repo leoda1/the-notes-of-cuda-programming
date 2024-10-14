@@ -31,4 +31,12 @@
 ![alt text](img/image3.png)
 ![alt text](img/image4.png)
 ![alt text](img/image5.png)
+quantization granularity:
+- 对于activations，选择per-tensor
+- 对于weights，选择per-channel
 ![alt text](img/image6.png)
+
+#### 4. 校准
+- weight的calibration，选minmax
+- activation的calibration，选entropy或者percentile
+![alt text](img/image7.png)
