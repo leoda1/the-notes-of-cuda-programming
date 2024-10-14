@@ -28,3 +28,7 @@
 - 工具：nsys, nvprof, dlprof, Nsight
 
 #### 3. 量化
+![alt text](img/image3.png)
+![alt text](img/image4.png)
+![alt text](img/image5.png)
+![alt text](img/image6.png)
