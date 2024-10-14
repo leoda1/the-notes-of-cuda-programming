@@ -40,3 +40,5 @@ quantization granularity:
 - weight的calibration，选minmax
 - activation的calibration，选entropy或者percentile
 ![alt text](img/image7.png)
+batchsize稍微高一些会更好 nvidia会将最大的新出现的数平方 所以当batchsize大 每个数字都有 比如1.5平方后2.25 当batch出现2的时候就不用去更新直方图最大值了。
+![alt text](img/image8.png)
