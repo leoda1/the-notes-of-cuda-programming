@@ -38,7 +38,7 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1\include\texture_types.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1\include\vector_functions.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1\include\vector_functions.hpp
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1\include\vector_types.h
-C:\Users\22681\Desktop\project\cudalearn\notes\code\matmul-shared-memory\inc\utils.hpp
+C:\Users\22681\Desktop\project\cudalearn\notes\code\CUDA\1.4 Matmul-shared-memory\inc\utils.hpp
 D:\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt.h
 D:\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_malloc.h
 D:\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_math.h

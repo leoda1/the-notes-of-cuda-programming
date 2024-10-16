@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\matmul-shared-memory\src\main.cpp">
+    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\CUDA\1.4 Matmul-shared-memory\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\matmul-shared-memory\src\timer.cpp">
+    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\CUDA\1.4 Matmul-shared-memory\src\timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\matmul-shared-memory\src\utils.cpp">
+    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\CUDA\1.4 Matmul-shared-memory\src\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -20,11 +20,11 @@
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\matmul-shared-memory\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\CUDA\1.4 Matmul-shared-memory\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{FC92FBE0-AE66-3145-BB84-B261562B9645}</UniqueIdentifier>
+      <UniqueIdentifier>{35850301-2EE7-3DEF-8876-0B67445D8A34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

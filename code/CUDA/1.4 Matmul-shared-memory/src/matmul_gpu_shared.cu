@@ -6,9 +6,9 @@
 
 __global__ void Matmul_shared_static_kernel(float* M_device, float* N_device, float* P_device, int width)
 {
+
     __shared__ float M_device_shared[BLOCKSIZE][BLOCKSIZE];
     __shared__ float N_device_shared[BLOCKSIZE][BLOCKSIZE];
-
     //index of the current element in the matrix
     int ix = blockIdx.x * blockDim.x + threadIdx.x;
     int iy = blockIdx.y * blockDim.y + threadIdx.y;

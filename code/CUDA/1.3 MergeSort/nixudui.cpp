@@ -763,9 +763,9 @@ int main()
     for (int i = 0; i < n; i ++){
         int x;
         cin >> x;
-        while ( tt && st[tt] >= x) tt--;
-        if (tt) cout << st[tt] << ' ';
-        else cout << -1 << ' ';
+        while ( tt && st[tt] >= x) tt--;//如果栈顶元素大于当前待入栈元素，则出栈
+        if (tt) cout << st[tt] << ' ';//如果栈空，则没有比该元素小的值
+        else cout << -1 << ' ';//栈顶元素就是左侧第一个比它小的元素
         
         st[++tt] =x;
     }

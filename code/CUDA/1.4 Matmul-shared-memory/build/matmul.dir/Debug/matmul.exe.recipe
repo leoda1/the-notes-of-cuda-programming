@@ -2,10 +2,10 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\22681\Desktop\project\cudalearn\notes\code\matmul-shared-memory\build\x64\Debug\ZERO_CHECK</FullPath>
+      <FullPath>C:\Users\22681\Desktop\project\cudalearn\notes\code\CUDA\1.4 Matmul-shared-memory\build\x64\Debug\ZERO_CHECK</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\22681\Desktop\project\cudalearn\notes\code\matmul-shared-memory\build\Debug\matmul.exe</FullPath>
+      <FullPath>C:\Users\22681\Desktop\project\cudalearn\notes\code\CUDA\1.4 Matmul-shared-memory\build\Debug\matmul.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

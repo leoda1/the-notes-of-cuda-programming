@@ -1,4 +1,5 @@
-
+#ifndef __UTILS_HPP__
+#define __UTILS_HPP__
 #include <cuda_runtime.h>
 #include <system_error>
 #include <stdarg.h>
@@ -40,3 +41,4 @@ static void __log_info(const char* format, ...) {
 void initMatrix(float* data, int size, int low, int high, int seed);
 void printMat(float* data, int size);
 void compareMat(float* h_data, float* d_data, int size);
+#endif //__UTILS_HPP__//

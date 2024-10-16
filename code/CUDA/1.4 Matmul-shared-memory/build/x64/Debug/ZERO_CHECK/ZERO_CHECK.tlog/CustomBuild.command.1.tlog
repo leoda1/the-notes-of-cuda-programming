@@ -1,6 +1,6 @@
-^C:\USERS\22681\DESKTOP\PROJECT\CUDALEARN\NOTES\CODE\MATMUL-SHARED-MEMORY\BUILD\CMAKEFILES\494DFAD6EA727165049D57A3A17643E8\GENERATE.STAMP.RULE
+^C:\USERS\22681\DESKTOP\PROJECT\CUDALEARN\NOTES\CODE\CUDA\1.4 MATMUL-SHARED-MEMORY\BUILD\CMAKEFILES\CDDA863988BCE81025536A907B012F8B\GENERATE.STAMP.RULE
 setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/22681/Desktop/project/cudalearn/notes/code/matmul-shared-memory -BC:/Users/22681/Desktop/project/cudalearn/notes/code/matmul-shared-memory/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/22681/Desktop/project/cudalearn/notes/code/matmul-shared-memory/build/matmul.sln
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/22681/Desktop/project/cudalearn/notes/code/CUDA/1.4 Matmul-shared-memory" "-BC:/Users/22681/Desktop/project/cudalearn/notes/code/CUDA/1.4 Matmul-shared-memory/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/22681/Desktop/project/cudalearn/notes/code/CUDA/1.4 Matmul-shared-memory/build/matmul.sln"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
