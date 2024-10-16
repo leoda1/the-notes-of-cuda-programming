@@ -103,5 +103,7 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "target": "cpp"
-    }
+    },
+    "workbench.activityBar.iconClickBehavior": "toggle",
+    "workbench.colorTheme": "Quiet Light"
 }

@@ -19,26 +19,35 @@
 存在TensorRT尚未支持的算子,需要自己写自己写plugin
 
 使用Tensor Core需要让tensor size为8或者16的倍数,不然会有性能损失
-- 8的倍数： fp16
-- 16的倍数：int8
+- 8的倍数:  fp16
+- 16的倍数: int8
 
 对使用TensorRT得到的推理引擎做benchmark和profiling
 - 使用TensorRT得到推理引擎并实现infer只是优化的第一步
-- 要使用NVIDIA提供的benchmark tools进行profiling（分析模型瓶颈在哪里，分析模型可进一步优化的地方在哪里， 分析模型中多余的memory access在哪里）
-- 工具：nsys, nvprof, dlprof, Nsight
+- 要使用NVIDIA提供的benchmark tools进行profiling(分析模型瓶颈在哪里，分析模型可进一步优化的地方在哪里， 分析模型中多余的memory access在哪里)
+- 工具: nsys, nvprof, dlprof, Nsight
 
 #### 3. 量化
 ![alt text](img/image3.png)
 ![alt text](img/image4.png)
 ![alt text](img/image5.png)
 quantization granularity:
-- 对于activations，选择per-tensor
-- 对于weights，选择per-channel
+- 对于activations, 选择per-tensor
+- 对于weights, 选择per-channel
 ![alt text](img/image6.png)
 
 #### 4. 校准
-- weight的calibration，选minmax
-- activation的calibration，选entropy或者percentile
+- weight的calibration, 选minmax
+- activation的calibration, 选entropy或者percentile
 ![alt text](img/image7.png)
 batchsize稍微高一些会更好 nvidia会将最大的新出现的数平方 所以当batchsize大 每个数字都有 比如1.5平方后2.25 当batch出现2的时候就不用去更新直方图最大值了。
 ![alt text](img/image8.png)
+
+#### 5. PTQ和量化分析
+据量化的时机，一般我们会把量化分为
+- PTQ(Post-Training Quantization),  训练后量化
+- QAT(Quantization-Aware Training), 训练时量化
+![alt text](img/image9.png)
+
+#### 6. QAT和量化分析
+QAT(Quantization Aware Training)也被称作显式量化。我们明确的在模型中添加Q/DQ节点(量化/反量化)，来控制某一个算子的精度。并且通过fine-tuning来更新模型权重，让权重学习并适应量化带来的精度误差 

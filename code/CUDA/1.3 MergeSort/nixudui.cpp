@@ -669,12 +669,105 @@ int main(){
     return 0;
 } */
 
-/* 单链表
+/* 双链表#include<iostream>
+
+using namespace std;
+
+const int N = 1e5 + 10;
+
+int m;
+int e[N], l[N], r[N];
+int idx;
+
+
+//! 初始化
+void init()
+{
+    l[1] = 0, r[0] = 1;//* 初始化 第一个点的右边是 1   第二个点的左边是 0
+    idx = 2;//! idx 此时已经用掉两个点了
+}
+
+//* 在第 K 个点右边插入一个 X 
+void add(int k, int x)
+{
+    e[idx] = x;
+    l[idx] = k;
+    r[idx] = r[k]; //todo 这边的 k 不加 1 ， 输入的时候 k+1 就好
+    l[r[k]] = idx;
+    r[k] = idx;
+    idx++;
+}//! 当然在 K 的左边插入一个数 可以再写一个 ， 也可以直接调用我们这个函数，在 k 的左边插入一个 数 等价于在 l[k] 的右边插入一个数 add(l[k],x)
+
+//*删除第 k个 点
+void remove(int k)
+{
+    r[l[k]] = r[k];
+    l[r[k]] = l[k];
+}
+
+int main(void)
+{
+    ios::sync_with_stdio(false);
+    cin >> m;
+
+    init();
+
+    while(m--)
+    {
+        string op;
+        cin >> op;
+        int k, x;
+        if(op=="R")
+        {
+            cin >> x;
+            add(l[1], x); //!   0和 1 只是代表 头和尾  所以   最右边插入 只要在  指向 1的 那个点的右边插入就可以了
+        }
+        else if(op=="L")//! 同理  最左边插入就是 在指向 0的数的左边插入就可以了   也就是可以直接在 0的 有右边插入
+        {
+            cin >> x;
+            add(0, x);
+        }
+        else if(op=="D")
+        {
+            cin >> k;
+            remove(k + 1);
+        }
+        else if(op=="IL")
+        {
+            cin >> k >> x;
+            add(l[k + 1], x);
+        }
+        else
+        {
+            cin >> k >> x;
+            add(k + 1, x);
+        }    
+    }
+    for(int i = r[0]; i != 1; i = r[i]) cout << e[i] << ' ';
+
+    return 0;
+}*/
+
+/* 单调栈 
 #include <iostream>
 
 using namespace std;
 
 const int N = 100010;
+int n;
+int st[N], tt;
 
-int m;
-int e[N], l[N], r[N], idx;
+int main()
+{
+    cin >> n;
+    for (int i = 0; i < n; i ++){
+        int x;
+        cin >> x;
+        while ( tt && st[tt] >= x) tt--;
+        if (tt) cout << st[tt] << ' ';
+        else cout << -1 << ' ';
+        
+        st[++tt] =x;
+    }
+    return 0;
+} */
