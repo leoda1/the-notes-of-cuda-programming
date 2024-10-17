@@ -50,4 +50,8 @@ batchsize稍微高一些会更好 nvidia会将最大的新出现的数平方 所
 ![alt text](img/image9.png)
 
 #### 6. QAT和量化分析
-QAT(Quantization Aware Training)也被称作显式量化。我们明确的在模型中添加Q/DQ节点(量化/反量化)，来控制某一个算子的精度。并且通过fine-tuning来更新模型权重，让权重学习并适应量化带来的精度误差 
+QAT(Quantization Aware Training)也被称作显式量化。我们明确的在模型中添加Q/DQ节点(量化/反量化)，来控制某一个算子的精度。并且通过fine-tuning来更新模型权重，让权重学习并适应量化带来的精度误差。 
+
+#### 7. 模型剪枝（pruning）
+对权重中一些意义不大的权重skip掉不参与计算。
+![alt text](img/image10.png)
