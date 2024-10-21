@@ -75,6 +75,11 @@ int main(int argc, char** argv)
 
     sample::gLogInfo << "Building and running a GPU inference engine for Onnx MNIST" << std::endl;
 
+    if (!sample.build())
+    {
+        return 
+    }
+
 
 
 
