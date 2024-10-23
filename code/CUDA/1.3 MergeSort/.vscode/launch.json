@@ -11,7 +11,7 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            // "MIMode": "gdb",
+            "MIMode": "gdb",
             // "setupCommands": [
             //     {
             //         "description": "Enable pretty-printing for gdb",
@@ -20,13 +20,13 @@
             //     }
             // ],
             // "preLaunchTask": "Build CUDA",
-            // "miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe",
+            // "miDebuggerPath": "C:\\MainSDK\\msys64\\mingw64\\bin\\gdb.exe",
             // "miDebuggerArgs": "",
             // "logging": {
             //     "moduleLoad": false
             // },
             // "windows": {
-            //     "miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe"
+            //     "miDebuggerPath": "C:\\MainSDK\\msys64\\mingw64\\bin\\gdb.exe"
             // }
         }
     ]

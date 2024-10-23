@@ -23,10 +23,18 @@ else()
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")                    # C++ Release
 endif()
 
-file(GLOB_RECURSE SRCS ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.cu)
-set(INC "${PROJECT_SOURCE_DIR}/inc")
+file(GLOB_RECURSE SRCS ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/getopt.h)
 
+set(TENSORRT_LIBRARY_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/lib")
+set(TENSORRT_COMMON_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/samples/common")
+set(TENSORRT_INCLUDE_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/include")
+set(TENSORRT_UTILS_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/samples/utils")
+
+link_directories(${TENSORRT_LIBRARY_DIR})
 add_executable(mnist_sample ${SRCS})     # 添加可执行文件
-target_include_directories(mnist_sample PRIVATE ${INC})
 target_include_directories(mnist_sample PRIVATE ${CUDA_INCLUDE_DIRS})
-target_link_libraries(mnist_sample PRIVATE ${CUDA_LIBRARIES})
+target_include_directories(mnist_sample PRIVATE "${TENSORRT_COMMON_DIR}")
+target_include_directories(mnist_sample PRIVATE "${TENSORRT_INCLUDE_DIR}")
+target_include_directories(mnist_sample PRIVATE "${TENSORRT_UTILS_DIR}")
+target_link_libraries(mnist_sample PRIVATE ${CUDA_LIBRARIES} nvinfer_10 nvonnxparser_10)
+target_link_libraries(mnist_sample PRIVATE ${CUDA_LIBRARIES} cudart)
