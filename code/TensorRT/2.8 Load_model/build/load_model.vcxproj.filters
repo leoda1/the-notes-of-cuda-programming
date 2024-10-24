@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\TensorRT\2.8 Load_model\src\cpp\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\TensorRT\2.8 Load_model\src\cpp\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\TensorRT\2.8 Load_model\src\cpp\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\22681\Desktop\project\cudalearn\notes\code\TensorRT\2.8 Load_model\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{65A42B64-B569-37D8-8374-30C385103698}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

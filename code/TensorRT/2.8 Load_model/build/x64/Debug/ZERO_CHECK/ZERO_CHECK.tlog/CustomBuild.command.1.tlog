@@ -1,0 +1,10 @@
+^C:\USERS\22681\DESKTOP\PROJECT\CUDALEARN\NOTES\CODE\TENSORRT\2.8 LOAD_MODEL\BUILD\CMAKEFILES\E662B786F6AF6EC579BC8F583BB74F1F\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/22681/Desktop/project/cudalearn/notes/code/TensorRT/2.8 Load_model" "-BC:/Users/22681/Desktop/project/cudalearn/notes/code/TensorRT/2.8 Load_model/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/22681/Desktop/project/cudalearn/notes/code/TensorRT/2.8 Load_model/build/load_model.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
