@@ -104,7 +104,9 @@
         "xutility": "cpp",
         "target": "cpp",
         "cassert": "cpp",
-        "codecvt": "cpp"
+        "codecvt": "cpp",
+        "memory_resource": "cpp",
+        "__functional_base": "cpp"
     },
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.colorTheme": "Quiet Light"
