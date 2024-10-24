@@ -10,6 +10,7 @@
 #define CUDA_CHECK(call)             __cudaCheck(call, __FILE__, __LINE__)
 #define LAST_KERNEL_CHECK(call)      __kernelCheck(__FILE__, __LINE__)
 
+// LOG("Initialization complete.")   convert to __log_info(Level::INFO, "Initialization complete.")
 #define LOG(...)                     __log_info(Level::INFO, __VA_ARGS__)
 #define LOGV(...)                    __log_info(Level::VERB, __VA_ARGS__)
 #define LOGE(...)                    __log_info(Level::ERROR, __VA_ARGS__)

@@ -18,6 +18,8 @@ private:
     std::string mEnginePath;
     nvinfer1::Dims mInputDims;
     nvinfer1::Dims mOutputDims;
+    nvinfer1::Dims mLayer;
+
     std::shared_ptr<nvinfer1::ICudaEngine> mEngine;
     bool constructNetwork();
     bool preprocess();
