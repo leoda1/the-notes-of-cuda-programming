@@ -15,7 +15,6 @@ using namespace std;
 
 class Logger : public nvinfer1::ILogger{
 public:
-
     // using Severity = nvinfer1::ILogger::Severity;
     virtual void log (Severity severity, const char* msg) noexcept override{
         string str;
@@ -89,7 +88,7 @@ bool Model::build(){
         return false;
     }
 
-    auto runtime       = unique_ptr_with_deleter<nvinfer1::IRuntime>(nvinfer1::createInferRuntime(logger));
+    auto runtime       = shared_ptr<nvinfer1::IRuntime>(nvinfer1::createInferRuntime(logger));
     if (!runtime) {
         LOGE("Failed to create runtime.");
         return false;

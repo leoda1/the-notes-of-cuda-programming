@@ -106,7 +106,8 @@
         "cassert": "cpp",
         "codecvt": "cpp",
         "memory_resource": "cpp",
-        "__functional_base": "cpp"
+        "__functional_base": "cpp",
+        "__tree": "cpp"
     },
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.colorTheme": "Quiet Light"
