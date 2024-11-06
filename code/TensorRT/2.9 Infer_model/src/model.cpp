@@ -6,6 +6,8 @@
 #include "NvInfer.h"
 #include "NvOnnxParser.h"
 #include "cuda_runtime.h"
+#include "argsParser.h"
+#include "NvInferRuntime.h"
 
 #include "../inc/model.hpp"
 #include "../inc/utils.hpp"
@@ -84,6 +86,15 @@ bool Model::build(){
     // 通过 network-> 就可以看自动补全 有那些可以打印 打印的API开头是get
     mInputDims         = network->getInput(0)->getDimensions();
     mOutputDims        = network->getOutput(0)->getDimensions();
+
+    // 把优化前和优化后的各个层的信息打印出来
+    LOG("Before TensorRT optimization");
+    print_network(*network, false);
+    LOG("");
+    LOG("After TensorRT optimization");
+    print_network(*network, true);
+
+    mEngine.reset();
     return true;
 };
 
@@ -109,15 +120,15 @@ bool Model::infer(){
     auto context     = unique_ptr_with_deleter<nvinfer1::IExecutionContext>(engine->createExecutionContext());
 
     // 获取输入和输出张量的名称
-    const char* input_name  = engine->getBindingName(0);
-    const char* output_name = engine->getBindingName(1);
+    for (int i = 0; i < engine->getNbIOTensors(); i++){
+        const char* input_name = engine->getIOTensorName(i);
+        // bool isInput = engine->bindingIsInput(i);
+        // 获取张量的形状
+        auto input_dims = context->getTensorShape(input_name);
 
-    // 获取输入和输出张量的形状
-    auto input_dims = context->getTensorShape(input_name);
-    auto output_dims = context->getTensorShape(output_name);
+        LOG("input dim shape is:  %s", input_name, printDims(input_dims).c_str());
+    }
 
-    LOG("input dim shape is:  %s", printDims(input_dims).c_str());
-    LOG("output dim shape is: %s", printDims(output_dims).c_str());
 
     /* 2. host->device的数据传递 */
     cudaStream_t stream;
@@ -142,7 +153,11 @@ bool Model::infer(){
 
     /* 3. 模型推理, 最后做同步处理 */
     float* bindings[] = {input_device, output_device};
-    bool success = context->enqueueV2((void**)bindings, stream, nullptr);
+    bool success = context->executeV2((void**)bindings);
+    if (!success) {
+        LOGE("Failed to execute inference.");
+        return false;
+    }
 
     /* 4. device->host的数据传递 */
     cudaMemcpyAsync(output_host, output_device, sizeof(output_host), cudaMemcpyKind::cudaMemcpyDeviceToHost, stream);
@@ -153,3 +168,54 @@ bool Model::infer(){
     LOG("finished inference");
     return true;
 }
+
+void Model::print_network(nvinfer1::INetworkDefinition &network, bool optimized) {
+    // ITensor, ILayer, INetwork
+    // ICudaEngine, IExecutionContext, IBuilder
+
+    int inputCount = network.getNbInputs();
+    int outputCount = network.getNbOutputs();
+    std::string layer_info;
+
+    for (int i = 0; i < inputCount; i++) {
+        auto input = network.getInput(i);
+        LOG("Input info: %s:%s", input->getName(), printTensorShape(input).c_str());
+    }
+
+    for (int i = 0; i < outputCount; i++) {
+        auto output = network.getOutput(i);
+        LOG("Output info: %s:%s", output->getName(), printTensorShape(output).c_str());
+    }
+    
+    int layerCount = optimized ? mEngine->getNbLayers() : network.getNbLayers();
+    LOG("network has %d layers", layerCount);
+
+    if (!optimized) {
+        for (int i = 0; i < layerCount; i++) {
+            char layer_info[1000];
+            auto layer   = network.getLayer(i);
+            auto input   = layer->getInput(0);
+            int n = 0;
+            if (input == nullptr){
+                continue;
+            }
+            auto output  = layer->getOutput(0);
+
+            LOG("layer_info: %-40s:%-25s->%-25s[%s]", 
+                layer->getName(),
+                printTensorShape(input).c_str(),
+                printTensorShape(output).c_str(),
+                getPrecision(layer->getPrecision()).c_str());
+        }
+
+    } else {
+        auto inspector = unique_ptr_with_deleter<nvinfer1::IEngineInspector>(mEngine->createEngineInspector());
+        for (int i = 0; i < layerCount; i++) {
+            std::string info = inspector->getLayerInformation(i, nvinfer1::LayerInformationFormat::kONELINE);
+
+            info = info.substr(0, info.size() - 1);
+            LOG("layer_info: %s", info.c_str());
+        }
+    }
+}
+

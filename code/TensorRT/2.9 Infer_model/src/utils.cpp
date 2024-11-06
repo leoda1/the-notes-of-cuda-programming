@@ -3,6 +3,8 @@
 // file
 #include <sstream>
 #include <fstream>
+#include <string>
+#include "NvInfer.h"
 //include
 #include "../inc/utils.hpp"
 
@@ -14,18 +16,18 @@ bool fileRead(const std::string &path, std::vector<unsigned char> &data, size_t 
     std::stringstream trtModelStream;
     std::ifstream cache(path);
 
-    /* 将engine的内容写入trtModelStream中*/
+    //将engine的内容写入trtModelStream中
     trtModelStream.seekg(0, trtModelStream.beg);
     trtModelStream << cache.rdbuf();
     cache.close();
 
-    /* 计算model的大小*/
+    // 计算model的大小
     trtModelStream.seekg(0, std::ios::end);
     size = trtModelStream.tellg();
 
     trtModelStream.seekg(0, std::ios::beg);
 
-    /* 将trtModelStream中的stream通过read函数写入modelMem中*/
+    // 将trtModelStream中的stream通过read函数写入modelMem中
     trtModelStream.read((char*)&data[0], size);
     return true;
 }
@@ -92,4 +94,28 @@ std::string printTensor(float* tensor, int size){
     n += snprintf(buff + n, sizeof(buff) - n, " ]");
     result = buff;
     return result;
+}
+
+std::string printTensorShape(nvinfer1::ITensor* tensor){
+    std::string str;
+    str += "[";
+    auto dims = tensor->getDimensions();
+    for (int j = 0; j < dims.nbDims; j++) {
+        str += std::to_string(dims.d[j]);
+        if (j != dims.nbDims - 1) {
+            str += " x ";
+        }
+    }
+    str += "]";
+    return str;
+}
+
+std::string getPrecision(nvinfer1::DataType type) {
+    switch(type) {
+        case nvinfer1::DataType::kFLOAT:  return "FP32";
+        case nvinfer1::DataType::kHALF:   return "FP16";
+        case nvinfer1::DataType::kINT32:  return "INT32";
+        case nvinfer1::DataType::kINT8:   return "INT8";
+        default:                          return "unknown";
+    }
 }

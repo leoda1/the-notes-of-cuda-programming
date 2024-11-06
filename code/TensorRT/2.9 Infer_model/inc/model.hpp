@@ -16,6 +16,8 @@ public:
     bool infer();
 
 private:
+    void print_network(nvinfer1::INetworkDefinition &network, bool optimized);
+
     std::string mOnnxPath;
     std::string mEnginePath;
     nvinfer1::Dims mInputDims;

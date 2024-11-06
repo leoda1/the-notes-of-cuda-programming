@@ -49,7 +49,10 @@ static void __log_info(Level level, const char* format, ...) {
     std::string getEnginePath(std::string onnxPath);
     std::vector<unsigned char> loadFile(const std::string& file);
     std::string printTensor(float* tensor, int size);
+    std::string printTensorShape(nvinfer1::ITensor* tensor);
     std::string printDims(const nvinfer1::Dims dims);
+    std::string getPrecision(nvinfer1::DataType type);
+
 
 
 #endif // __UTILS_HPP__

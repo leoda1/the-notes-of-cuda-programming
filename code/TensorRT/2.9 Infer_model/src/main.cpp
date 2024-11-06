@@ -7,13 +7,14 @@
 
 int main(int argc, char const* argv[])
 {
-    Model model("models/onnx/infer.onnx");
+    Model model("models/onnx/MHSA-swin-subgraph.onnx");
     if (!model.build()){
         LOGE("Failed to build model");
         return -1;
     }
-    if (!model.infer()){
-        LOGE("Failed to infer model");
-        return -1;
-    }
+    // if (!model.infer()){
+    //     LOGE("Failed to infer model");
+    //     return -1;
+    // }
+    return 0;
 }
