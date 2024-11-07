@@ -70,7 +70,7 @@ std::string printDims(const nvinfer1::Dims dims){
 
     n += snprintf(buff + n, sizeof(buff) - n, "[ ");
     for (int i = 0; i < dims.nbDims; i++){
-        n += snprintf(buff + n, sizeof(buff) - n, "%d", dims.d[i]);
+        n += snprintf(buff + n, sizeof(buff) - n, "%ld", dims.d[i]);
         if (i != dims.nbDims - 1) {
             n += snprintf(buff + n, sizeof(buff) - n, ", ");
         }

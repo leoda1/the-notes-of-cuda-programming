@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/build",
+  "command": "/usr/bin/c++  -I/usr/local/cuda-12.4/include -I\"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src\" -I\"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/inc\" -I/mnt/c/opencv -I/usr/local/tensorrt/include -I/usr/src/tensorrt/samples/common -I/usr/src/tensorrt/samples/utils -I/usr/local/tensorrt/samples/common -I/usr/local/tensorrt/samples/utils -std=gnu++17 -o CMakeFiles/Infer_model.dir/src/main.cpp.o -c \"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src/main.cpp\"",
+  "file": "/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src/main.cpp"
+},
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/build",
+  "command": "/usr/bin/c++  -I/usr/local/cuda-12.4/include -I\"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src\" -I\"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/inc\" -I/mnt/c/opencv -I/usr/local/tensorrt/include -I/usr/src/tensorrt/samples/common -I/usr/src/tensorrt/samples/utils -I/usr/local/tensorrt/samples/common -I/usr/local/tensorrt/samples/utils -std=gnu++17 -o CMakeFiles/Infer_model.dir/src/model.cpp.o -c \"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src/model.cpp\"",
+  "file": "/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src/model.cpp"
+},
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/build",
+  "command": "/usr/bin/c++  -I/usr/local/cuda-12.4/include -I\"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src\" -I\"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/inc\" -I/mnt/c/opencv -I/usr/local/tensorrt/include -I/usr/src/tensorrt/samples/common -I/usr/src/tensorrt/samples/utils -I/usr/local/tensorrt/samples/common -I/usr/local/tensorrt/samples/utils -std=gnu++17 -o CMakeFiles/Infer_model.dir/src/utils.cpp.o -c \"/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src/utils.cpp\"",
+  "file": "/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/src/utils.cpp"
+}
+]

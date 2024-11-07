@@ -1,3 +1,3 @@
-C:/Users/22681/Desktop/project/cudalearn/notes/code/TensorRT/2.9 Infer_model/build/CMakeFiles/Infer_model.dir
-C:/Users/22681/Desktop/project/cudalearn/notes/code/TensorRT/2.9 Infer_model/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/22681/Desktop/project/cudalearn/notes/code/TensorRT/2.9 Infer_model/build/CMakeFiles/ZERO_CHECK.dir
+/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/build/CMakeFiles/Infer_model.dir
+/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/build/CMakeFiles/edit_cache.dir
+/home/joker/projects/cudalearn/notes/code/TensorRT/2.9 Infer_model/build/CMakeFiles/rebuild_cache.dir

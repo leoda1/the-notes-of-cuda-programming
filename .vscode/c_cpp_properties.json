@@ -4,11 +4,10 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.1/include",
-                "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/samples/common",
-                "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/include",
-                "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/samples/utils",
-                "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27/samples"
+                "/usr/local/cuda-12.4/include",
+                "/usr/src/tensorrt/samples/common",
+                "/usr/src/tensorrt/samples/utils",
+                "/usr/src/tensorrt/samples/common"
             ],
             "defines": [
                 "_DEBUG",
@@ -16,7 +15,7 @@
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.22000.0",
-            "compilerPath": "E:/vs IDE/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe",
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-msvc-x64"

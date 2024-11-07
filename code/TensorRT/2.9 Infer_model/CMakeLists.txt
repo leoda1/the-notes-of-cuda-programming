@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 project(load_model LANGUAGES CXX CUDA)
+
+#设置cmake编译选项
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CUDA_STANDARD 17)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
@@ -7,8 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 查找 CUDA 库
-find_package(CUDAToolkit REQUIRED)
-if(CUDAToolkit_FOUND)
+find_package(CUDA REQUIRED)
+if(CUDA_FOUND)
     message(STATUS "Found CUDA ${CUDA_VERSION_STRING} at ${CUDA_TOOLKIT_ROOT_DIR}")
     message(STATUS "CUDA_INCLUDE_DIRS: ${CUDA_INCLUDE_DIRS}")
     message(STATUS "CUDA_LIBRARIES: ${CUDA_LIBRARIES}")
@@ -21,8 +23,9 @@ endif()
 set(BUILD_PATH ${PROJECT_BINARY_DIR}/build)
 set(SRC_PATH ${PROJECT_SOURCE_DIR}/src)
 set(INC_PATH ${PROJECT_SOURCE_DIR}/inc)
-set(OPENCV_INSTALL_DIR "E:/opencv")
-set(TENSORRT_INSTALL_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/TensorRT-10.1.0.27")
+
+set(OPENCV_INSTALL_DIR "/mnt/c/opencv")
+set(TENSORRT_INSTALL_DIR "/usr/local/tensorrt")
 
 # 设置源文件
 file(GLOB_RECURSE CXX_SRC ${SRC_PATH}/*.cpp)
@@ -44,6 +47,8 @@ include_directories(
     ${INC_PATH}
     "${OPENCV_INSTALL_DIR}"
     "${TENSORRT_INSTALL_DIR}/include"
+    "/usr/src/tensorrt/samples/common"
+    "/usr/src/tensorrt/samples/utils"
 )
 
 # 链接库路径
@@ -61,8 +66,8 @@ target_link_libraries(Infer_model PRIVATE
     cudart
     cublas
     cudnn
-    nvinfer_10
-    nvonnxparser_10
+    nvinfer
+    nvonnxparser
     # stdc++fs
     ${OpenCV_LIBRARIES}
 )
