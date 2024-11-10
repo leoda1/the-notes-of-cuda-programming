@@ -8,6 +8,7 @@
 #### TOPS(Tera operations per second)：
 -  指的是一秒钟可以处理的整型运算的次数
 -  衡量计算机硬件性能、计算能力的一个单位
+
 ![TOPS](img/image2.png)
 
 #### 2. 模型部署误区
@@ -40,6 +41,7 @@ quantization granularity:
 - weight的calibration, 选minmax
 - activation的calibration, 选entropy或者percentile
 ![alt text](img/image7.png)
+
 batchsize稍微高一些会更好 nvidia会将最大的新出现的数平方 所以当batchsize大 每个数字都有 比如1.5平方后2.25 当batch出现2的时候就不用去更新直方图最大值了。
 ![alt text](img/image8.png)
 
