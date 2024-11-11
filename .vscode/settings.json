@@ -110,5 +110,6 @@
         "__tree": "cpp"
     },
     "workbench.activityBar.iconClickBehavior": "toggle",
-    "workbench.colorTheme": "Quiet Light"
+    "workbench.colorTheme": "Quiet Light",
+    "C_Cpp.default.compilerPath": "/usr/bin/g++"
 }

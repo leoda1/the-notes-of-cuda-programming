@@ -18,14 +18,14 @@ __global__ void Matmul_shared_static_kernel(float* M_device, float* N_device, fl
     int ty = threadIdx.y;
 
     float P_element = 0;
-    for (int i = 0; i < width / BLOCKSIZE; i++){
-/*      iy * width is the row index,  i * BLOCKSIZE + tx is the column index*/
-        M_device_shared[ty][tx] = M_device[iy * width + (i * BLOCKSIZE + tx)];
-/*      (i * BLOCKSIZE + ty) * width is the row index,  ix is the column index*/       
-        N_device_shared[ty][tx] = N_device[(i * BLOCKSIZE + ty) * width + ix];
+    for (int m = 0; m < width / BLOCKSIZE; m++){
+/*      iy * width is the row index,  (m * BLOCKSIZE + tx) is the column index */
+/*      (m * BLOCKSIZE + ty) * width is the row index,  ix is the column index */
+        M_device_shared[ty][tx] = M_device[iy * width + (m * BLOCKSIZE + tx)];       
+        N_device_shared[ty][tx] = N_device[(m * BLOCKSIZE + ty) * width + ix];
         __syncthreads();
-        for (int j = 0; j < BLOCKSIZE; j++){
-            P_element += M_device_shared[ty][j] * N_device_shared[j][tx];
+        for (int k = 0; k < BLOCKSIZE; k++){
+            P_element += M_device_shared[ty][k] * N_device_shared[k][tx];
         }
         __syncthreads();
     }
@@ -52,12 +52,13 @@ __global__ void Matmul_shared_dynamic_kernel(float* M_device, float* N_device, f
     int ty = threadIdx.y;
 
     float P_element = 0;
-    for (int i = 0; i < width / blocksize; i++){
-        device_shared[tx + ty * blocksize] = M_device[iy * width + (i * blocksize + tx)];
-        device_shared[tx + ty * blocksize + stride] = N_device[(i * blocksize + ty) * width + ix];
+    // M矩阵存到d矩阵的前一半 N矩阵存到d矩阵的后一半
+    for (int m = 0; m < width / blocksize; m++){
+        device_shared[tx + ty * blocksize] = M_device[iy * width + (m * blocksize + tx)];
+        device_shared[stride + (tx + ty * blocksize)] = N_device[(m * blocksize + ty) * width + ix];
         __syncthreads();
-        for (int j = 0; j < blocksize; j++){
-            P_element += device_shared[tx + j * blocksize] * device_shared[tx + ty * blocksize + j];
+        for (int k = 0; k < blocksize; k++){
+            P_element += device_shared[tx + k * blocksize] * device_shared[stride + (k * blocksize + tx)];
         }
         __syncthreads();
     }
