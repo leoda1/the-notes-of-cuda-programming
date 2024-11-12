@@ -33,27 +33,23 @@ __global__ void Matmul_shared_static_kernel(float* M_device, float* N_device, fl
 
     float P_element = 0;
     if(bank_conflict){
-        for (int i = 0; i < width / BLOCKSIZE; i++){
-    /*      iy * width is the row index,  i * BLOCKSIZE + tx is the column index*/
-            M_device_shared[tx][ty] = M_device[ix * width + (i * BLOCKSIZE + ty)];
-    /*      (i * BLOCKSIZE + ty) * width is the row index,  ix is the column index*/       
-            N_device_shared[tx][ty] = N_device[(i * BLOCKSIZE + tx) * width + iy];
+        for (int m = 0; m < width / BLOCKSIZE; m++){
+            M_device_shared[tx][ty] = M_device[ix * width + (m * BLOCKSIZE + ty)];     
+            N_device_shared[tx][ty] = N_device[(m * BLOCKSIZE + tx) * width + iy];
             __syncthreads();
-            for (int j = 0; j < BLOCKSIZE; j++){
-                P_element += M_device_shared[tx][j] * N_device_shared[j][ty];
+            for (int k = 0; k < BLOCKSIZE; k++){
+                P_element += M_device_shared[tx][k] * N_device_shared[k][ty];
             }
             __syncthreads();
         }
         P_device[idx] = P_element;
     }else{
-        for (int i = 0; i < width / BLOCKSIZE; i++){
-    /*      iy * width is the row index,  i * BLOCKSIZE + tx is the column index*/
-            M_device_shared[ty][tx] = M_device[iy * width + (i * BLOCKSIZE + tx)];
-    /*      (i * BLOCKSIZE + ty) * width is the row index,  ix is the column index*/       
-            N_device_shared[ty][tx] = N_device[(i * BLOCKSIZE + ty) * width + ix];
+        for (int m = 0; m < width / BLOCKSIZE; m++){
+            M_device_shared[ty][tx] = M_device[iy * width + (m * BLOCKSIZE + tx)];       
+            N_device_shared[ty][tx] = N_device[(m * BLOCKSIZE + ty) * width + ix];
             __syncthreads();
-            for (int j = 0; j < BLOCKSIZE; j++){
-                P_element += M_device_shared[ty][j] * N_device_shared[j][tx];
+            for (int k = 0; k < BLOCKSIZE; k++){
+                P_element += M_device_shared[ty][k] * N_device_shared[k][tx];
             }
             __syncthreads();
         }

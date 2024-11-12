@@ -1,0 +1,27 @@
+[
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build",
+  "command": "/usr/local/cuda-12.4/bin/nvcc -forward-unknown-to-host-compiler  -I/usr/local/cuda-12.4/include  --generate-code=arch=compute_52,code=[compute_52,sm_52] -std=c++14 -x cu -c \"/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/gelu.cu\" -o CMakeFiles/stream.dir/src/gelu.cu.o",
+  "file": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/gelu.cu"
+},
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build",
+  "command": "/usr/bin/c++  -I/usr/local/cuda-12.4/include -std=gnu++14 -o CMakeFiles/stream.dir/src/main.cpp.o -c \"/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/main.cpp\"",
+  "file": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/main.cpp"
+},
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build",
+  "command": "/usr/local/cuda-12.4/bin/nvcc -forward-unknown-to-host-compiler  -I/usr/local/cuda-12.4/include  --generate-code=arch=compute_52,code=[compute_52,sm_52] -std=c++14 -x cu -c \"/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/stream.cu\" -o CMakeFiles/stream.dir/src/stream.cu.o",
+  "file": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/stream.cu"
+},
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build",
+  "command": "/usr/bin/c++  -I/usr/local/cuda-12.4/include -std=gnu++14 -o CMakeFiles/stream.dir/src/timer.cpp.o -c \"/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/timer.cpp\"",
+  "file": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/timer.cpp"
+},
+{
+  "directory": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build",
+  "command": "/usr/bin/c++  -I/usr/local/cuda-12.4/include -std=gnu++14 -o CMakeFiles/stream.dir/src/utils.cpp.o -c \"/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/utils.cpp\"",
+  "file": "/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/src/utils.cpp"
+}
+]

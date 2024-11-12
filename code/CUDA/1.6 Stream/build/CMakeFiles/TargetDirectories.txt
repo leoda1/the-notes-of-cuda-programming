@@ -1,0 +1,3 @@
+/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build/CMakeFiles/stream.dir
+/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build/CMakeFiles/edit_cache.dir
+/home/joker/projects/cudalearn/notes/code/CUDA/1.6 Stream/build/CMakeFiles/rebuild_cache.dir
