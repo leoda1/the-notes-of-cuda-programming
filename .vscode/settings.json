@@ -107,7 +107,11 @@
         "codecvt": "cpp",
         "memory_resource": "cpp",
         "__functional_base": "cpp",
-        "__tree": "cpp"
+        "__tree": "cpp",
+        "*.tcc": "cpp",
+        "condition_variable": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp"
     },
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.colorTheme": "Quiet Light",
