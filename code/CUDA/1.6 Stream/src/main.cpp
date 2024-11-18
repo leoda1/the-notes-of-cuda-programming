@@ -63,7 +63,7 @@ void sleep_test(){
 
 void matmul_test() {
     /*
-     * 大家试着在这里对matmul计算做一个多流的计算看看整体延迟的改变
+     * 这里对matmul计算做一个多流的计算看看整体延迟的改变
      * 可以观测到相比于kernel的计算, memcpy的延迟会很小
     */
 }
