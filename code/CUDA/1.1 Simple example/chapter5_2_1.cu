@@ -1,5 +1,6 @@
 #include <cuda_runtime.h>
 #include <stdio.h>
+#include <cublas.h>
 #define N 3
 
 __global__ void cluster_kernel(float *input, float *output)
