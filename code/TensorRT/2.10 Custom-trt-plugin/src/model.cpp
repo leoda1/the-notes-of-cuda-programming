@@ -24,11 +24,12 @@ public:
     virtual void log (Severity severity, const char* msg) noexcept override {
         string str;
         switch (severity) {
-            case Severity::kINTERNAL_ERROR: str = RED "[fatal]" CLEAR; 
-            case Severity::kERROR :         str = RED "[fatal]" CLEAR; 
-            case Severity::kWARNING :       str = BLUE "[fatal]" CLEAR; 
+            case Severity::kINTERNAL_ERROR: str = RED   "[fatal]"  CLEAR; 
+            case Severity::kERROR :         str = RED   "[fatal]"  CLEAR; 
+            case Severity::kWARNING :       str = BLUE  "[fatal]"  CLEAR; 
             case Severity::kINFO :          str = YELLOW "[fatal]" CLEAR; 
             case Severity::kVERBOSE:        str = PURPLE "[verb]"  CLEAR;
         }
     }
 };
+
