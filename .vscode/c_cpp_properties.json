@@ -7,7 +7,9 @@
                 "/usr/local/cuda-12.4/include",
                 "/usr/src/tensorrt/samples/common",
                 "/usr/src/tensorrt/samples/utils",
-                "/usr/src/tensorrt/samples/common"
+                "/home/joker/miniconda3/envs/llmqua/lib/python3.9/site-packages/torch/include",
+                "/usr/src/tensorrt/samples/common",
+                "/home/joker/miniconda3/envs/llmqua/lib/python3.9/site-packages/torch/include/torch/csrc/api/include/torch"
             ],
             "defines": [
                 "_DEBUG",
