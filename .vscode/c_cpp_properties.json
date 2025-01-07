@@ -9,7 +9,8 @@
                 "/usr/src/tensorrt/samples/utils",
                 "/home/joker/miniconda3/envs/llmqua/lib/python3.9/site-packages/torch/include",
                 "/usr/src/tensorrt/samples/common",
-                "/home/joker/miniconda3/envs/llmqua/lib/python3.9/site-packages/torch/include/torch/csrc/api/include/torch"
+                "/home/joker/miniconda3/envs/llmqua/lib/python3.9/site-packages/torch/include/torch/csrc/api/include/torch",
+                "/home/joker/miniconda3/envs/llmqua/lib/python3.9/site-packages/torch/include/torch/csrc/api/include"
             ],
             "defines": [
                 "_DEBUG",

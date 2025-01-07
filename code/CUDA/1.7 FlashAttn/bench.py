@@ -1,12 +1,15 @@
 import math
-
+import os
+os.environ['TORCH_CUDA_ARCH_LIST'] = '8.9'
 import torch
 from torch.nn import functional as F
 from torch.utils.cpp_extension import load
 
 # Load the CUDA kernel as a python module
-minimal_attn = load(name='minimal_attn', sources=['main.cpp', 'flash.cu'], extra_cuda_cflags=['-O2'])
 
+print("开始加载 CUDA 扩展...")
+minimal_attn = load(name='minimal_attn', sources=['main.cpp', 'V1.cu'], extra_cuda_cflags=['-O2'], verbose=True)
+print("CUDA 扩展加载完成。")
 # Use small model params, otherwise slower than manual attention. See caveats in README.
 batch_size = 16
 n_head = 12
@@ -37,3 +40,6 @@ with torch.autograd.profiler.profile(use_cuda=True) as prof:
 print(prof.key_averages().table(sort_by='cuda_time_total', row_limit=10))
 
 print('attn values sanity check:', torch.allclose(minimal_result, manual_result, rtol=0, atol=1e-02))
+
+
+# command:  MAX_JOBS=1 python bench.py
