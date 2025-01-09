@@ -40,21 +40,21 @@
 git clone https://github.com/leoda1/the-notes-of-cuda-programming.git
 ```
 ## How 2 use
-eg：
+eg:
 /code/CUDA/Simple example/GPU_Cache.cu 在terminal中
 ```sh
 nvcc GPU_Cache.cu -o name
 ./name
 ```
 eg:
-/code/CUDA/Test_warp用的是cmake构建，按照下面指令运行
+/code/CUDA/Test_warp用的是cmake构建, 按照下面指令运行
 ```sh
 cmake -B build -G #这是cmake的命令，这里可以找到你现在vs的版本
 cmake -B build -G"Visual Studio 16 2019" #这是cmake的命令，具体看自己的系统
 cmake --build build #编译代码
 .\build\Debug\your_project.exe #运行Debug版本的可执行文件
 ```
-这里写了blog记录了怎么用cmake运行，具体点这里[blog](https://blog.csdn.net/buuliuda/article/details/139101651?spm=1001.2014.3001.5502)。
+这里写了blog记录了怎么用cmake运行, 具体点这里[blog](https://blog.csdn.net/buuliuda/article/details/139101651?spm=1001.2014.3001.5502)。
 
 ## 参考资料
 - [CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)

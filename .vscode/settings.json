@@ -111,7 +111,11 @@
         "*.tcc": "cpp",
         "condition_variable": "cpp",
         "numbers": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "shared_mutex": "cpp",
+        "cinttypes": "cpp",
+        "typeindex": "cpp",
+        "valarray": "cpp"
     },
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.colorTheme": "Quiet Light",
