@@ -9,7 +9,7 @@ __global__ void reduce_baseline (float * g_idata, float * g_odata) {
 
     // each thread loads one element from global to shared mem
     unsigned int tid = threadIdx.x;
-    unsigned int idx = blockDim.x * blockIdx.x * 2 + tid;
+    unsigned int idx = blockIdx.x * (blockDim.x * 2) + tid;
     sdata[tid] = g_idata[idx] + g_idata[idx + blockDim.x];
     __syncthreads();
 
@@ -32,12 +32,12 @@ int main() {
     for (int i = 0; i < N; i++) input_host[i] = 2.0;
     cudaMemcpy(input_device, input_host, N*sizeof(float), cudaMemcpyHostToDevice);
 
-    int32_t block_num = (N + BLOCK_SIZE - 1) / BLOCK_SIZE;
-    float *output_host = (float*)malloc((N / BLOCK_SIZE) * sizeof(float));
+    int32_t block_num = (N + BLOCK_SIZE * 2 - 1) / (BLOCK_SIZE * 2);
+    float *output_host = (float*)malloc(block_num * sizeof(float));
     float *output_device;
-    cudaMalloc((void **)&output_device, (N / BLOCK_SIZE) * sizeof(float));
+    cudaMalloc((void **)&output_device, block_num * sizeof(float));
     
-    dim3 grid(N / BLOCK_SIZE, 1);
+    dim3 grid(block_num, 1);
     dim3 block(BLOCK_SIZE, 1);
     reduce_baseline<<<grid, block>>>(input_device, output_device);
     
@@ -45,11 +45,15 @@ int main() {
     cudaMemcpy(output_host, output_device, block_num * sizeof(float), cudaMemcpyDeviceToHost);
     
     float final = 0.0;
-    for (int i = 0; i < 10; i++) {
-    std::cout << "Block " << i << " result: " << output_host[i] << std::endl;
+    for (int i = 0; i < block_num; i++) {
+    if (i < 10){
+            std::cout << "Block " << i << " result: " << output_host[i] << std::endl;
+        }
         final += output_host[i];  // Sum up the block results
     }
     std::cout << "Final result after reduction: " << final << std::endl;
+    float expected = 2.0f * N;
+    std::cout << "Expected final result: " << expected << std::endl;
 
     // Free memory
     cudaFree(input_device);

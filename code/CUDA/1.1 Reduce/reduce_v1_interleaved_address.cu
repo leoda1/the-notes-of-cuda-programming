@@ -46,11 +46,15 @@ int main() {
     cudaMemcpy(output_host, output_device, block_num * sizeof(float), cudaMemcpyDeviceToHost);
     
     float final = 0.0;
-    for (int i = 0; i < 10; i++) {
-    std::cout << "Block " << i << " result: " << output_host[i] << std::endl;
+    for (int i = 0; i < N / BLOCK_SIZE; i++) {
+        if (i < 10) {
+            std::cout << "Block " << i << " result: " << output_host[i] << std::endl;
+        }
         final += output_host[i];  // Sum up the block results
     }
     std::cout << "Final result after reduction: " << final << std::endl;
+    float expected = 2.0f * N;
+    std::cout << "Expected final result: " << expected << std::endl;
 
     // Free memory
     cudaFree(input_device);
