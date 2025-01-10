@@ -4,7 +4,7 @@
 #define N 32*1024*1024
 #define BLOCK_SIZE 256
 
-__global__ void reduce_baseline (float * g_idata, float * g_odata) {
+__global__ void reduce_v1 (float * g_idata, float * g_odata) {
     __shared__ float sdata[BLOCK_SIZE];
 
     // each thread loads one element from global to shared mem
@@ -40,7 +40,7 @@ int main() {
     
     dim3 grid(N / BLOCK_SIZE, 1);
     dim3 block(BLOCK_SIZE, 1);
-    reduce_baseline<<<grid, block>>>(input_device, output_device);
+    reduce_v1<<<grid, block>>>(input_device, output_device);
     
     cudaDeviceSynchronize();
     cudaMemcpy(output_host, output_device, block_num * sizeof(float), cudaMemcpyDeviceToHost);
