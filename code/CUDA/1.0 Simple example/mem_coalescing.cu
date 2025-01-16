@@ -29,8 +29,15 @@ int main() {
 
     initializeArray(in, n);
 
-    int blocksize = 128;
+    int blocksize = 768;
     int numblock = (n + blocksize - 1) / blocksize;
+    // int numblock = 48;
+
+    // calculate the best grid and block size
+    // cudaOccupancyMaxPotentialBlockSize(&numblock, &blocksize, copyDataCoalesce, 0, 0);
+    // std::cout << "recommend blocksize:" << blocksize
+    //           << "recommend gridsize :" << numblock << std::endl;
+
 
     copyDataNonCoalesce<<<numblock, blocksize>>>(in, out, n);
     cudaDeviceSynchronize();
