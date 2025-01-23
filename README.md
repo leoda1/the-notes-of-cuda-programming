@@ -3,6 +3,9 @@
 
 初衷：是为了记录自己学习CUDA C++编程的过程，希望能够帮助到大家。但是过程中发现学习路径不是很多，资料大多是英文为主，而我主要通过bilibili和官方文档学习。下方目录结构中的code主要包括跟着官方的samples和各类b站up主的project复现，cuda_programming_guide是官方的pdf文档的阅读笔记。
 
+## revelant note
+可以在我的notion中找到对于CUDA-mode笔记。
+
 ## project_directory
 ```
 ├── code
@@ -14,8 +17,7 @@
 |   |    ├──1.4 Matmul_shared_memory
 |   |    ├──1.5 Shared_conflict
 |   |    ├──1.6 Stream
-|   |    ├──1.7 Flashattn
-|   |    ├──
+|   |    ├──1.7 FlashAttn
 │   ├── TensorRT
 |   |    ├──2.1 Generate-onnx
 |   |    ├──2.2 Export-onnx

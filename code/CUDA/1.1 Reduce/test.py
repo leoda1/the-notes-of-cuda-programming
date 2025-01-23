@@ -51,7 +51,7 @@ def square(x):
         n_cols,
         num_warps=num_warps,
         BLOCK_SIZE=BLOCK_SIZE,
-    )
+    )   
     return y
 
 torch.manual_seed(0)
