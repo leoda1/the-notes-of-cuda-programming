@@ -5,7 +5,7 @@
 
 ## revelant note
 可以在我的notion中找到对于CUDA-mode笔记。
-
+[https://amethyst-cayenne-949.notion.site/CUDA-168cb70356ad80629a3cd61f59a6dcf2?pvs=4](https://amethyst-cayenne-949.notion.site/CUDA-168cb70356ad80629a3cd61f59a6dcf2?pvs=4)
 ## project_directory
 ```
 ├── code
