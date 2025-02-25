@@ -3,7 +3,7 @@
 
 初衷：是为了记录自己学习CUDA C++编程的过程，希望能够帮助到大家。但是过程中发现学习路径不是很多，资料大多是英文为主，而我主要通过bilibili和官方文档学习。下方目录结构中的code主要包括跟着官方的samples和各类b站up主的project复现，cuda_programming_guide是官方的pdf文档的阅读笔记。
 
-## revelant note
+## Related note
 可以在我的notion中找到对于CUDA-mode笔记。
 [https://amethyst-cayenne-949.notion.site/CUDA-168cb70356ad80629a3cd61f59a6dcf2?pvs=4](https://amethyst-cayenne-949.notion.site/CUDA-168cb70356ad80629a3cd61f59a6dcf2?pvs=4)
 ## project_directory
