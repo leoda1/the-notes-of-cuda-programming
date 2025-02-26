@@ -17,8 +17,7 @@ __global__ void vecaddCoarsened(float *A, float *B, float *C) {
     }
     if (idx + 1 < N) {
         C[idx + 1] = A[idx + 1] + B [idx + 1];
-    }
-    
+    }  
 }
 
 void random_init (float *data, int size) {
