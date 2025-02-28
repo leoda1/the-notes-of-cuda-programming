@@ -1,7 +1,7 @@
 ## 前言
 愿望：希望自己能够将这个项目持续更新下去，从而能够帮助到更多的人。希望可以有更多人加入本项目(目前每个实现并不是都有讲解，并且还有很多更深入的部分没有涉及，其次就是cuda programming notes太长太杂需要慢慢看慢慢写，最后缺少TVM此类编译器优化的内容)，一起维护，共同进步。
 (邮箱：20231083510920@buu.edu.cn, 电话:18621761124)
-## revelant note
+## Related note
 可以在我的notion中在线阅读笔记(主要是GPU mode的理论知识)
 [https://amethyst-cayenne-949.notion.site](https://amethyst-cayenne-949.notion.site/CUDA-168cb70356ad80629a3cd61f59a6dcf2?pvs=4)，目前更新的内容如下：
 ![alt text](image.png)
