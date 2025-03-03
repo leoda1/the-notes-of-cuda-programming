@@ -23,4 +23,15 @@ int main() {
         delete ptr;
     });
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+
+/******************************************************************
+use reset init and call lambda3 delete p41
+call lambda2 delete p3
+call lambda1 delete p2
+call Deleter delete p1
+ *****************************************************************/
+>>>>>>> 837092c (1)
