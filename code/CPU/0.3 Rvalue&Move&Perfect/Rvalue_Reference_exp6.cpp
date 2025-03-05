@@ -76,6 +76,7 @@ int main()
 
     vector<int> vect1 = move(vect); // ✅ move vect
     cout << "after move vect size: " << vect.size() << endl;
+    cout << "vect capacity: " << vect.capacity() << endl;
     cout << "new vect1 size: " << vect1.size() << endl;
 }
 /******************************************************************
