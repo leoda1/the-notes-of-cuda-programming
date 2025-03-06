@@ -10,6 +10,11 @@
 ├── code
 │   ├── CPU
 |   |    ├──0.0 Sync_queue 条件变量实现一个同步队列(线程安全的数据共享区)
+|   |    ├──0.1 Lamba 表达式
+|   |    ├──0.2 Smart Pointers(shared_ptr, weak_ptr, unique_ptr)
+|   |    ├──0.3 Rvalue&Move&Perfect 右值引用 移动语义 完美转发实现性能优化
+|   |    ├──0.4 Asynchronous Operation 异步操作
+|   |    ├──0.5 Atomic Operation 原子变量，CAS操作和内存顺序等实现线程安全访问数据
 │   ├── CUDA
 |   |    ├──1.0 Simple example 官方api实现的各类功能
 |   |    ├──1.1 Reduce 规约算子优化
