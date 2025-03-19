@@ -1,3 +1,11 @@
+/******************************************************************
+ * Author      : Da Liu
+ * Date        : 2025-03-19
+ * File Name   : mpi_status.cc
+ * Description : This is a simple example of using MPI_Status to get
+ *               additional information about a message received from
+ *               another process.
+ *****************************************************************/
 #include <mpi.h>
 #include <iostream>
 #include <stdio.h>

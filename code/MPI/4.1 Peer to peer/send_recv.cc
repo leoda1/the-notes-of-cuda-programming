@@ -31,3 +31,10 @@ int main(int argc, char** argv) {
     MPI_Finalize();
     return 0;
 }
+/******************************************************************
+base) joker@joker-2 4.1 Send & Recv % mpirun -np 2 ./send_recv
+Process 1 received number -1 from process 0
+(base) joker@joker-2 4.1 Send & Recv % mpirun -np 1 ./send_recv
+World size must be greater than 1 for ./send_recv
+Abort(1) on node 0 (rank 0 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 0
+*******************************************************************/
