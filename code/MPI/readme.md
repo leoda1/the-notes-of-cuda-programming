@@ -527,7 +527,7 @@ MPI_Barrier(MPI_Comm comm)
 
 这个方法会构建一个屏障，任何进程都没法跨越屏障，直到所有的进程都到达屏障。这边有一个示意图。假设水平的轴代表的是程序的执行，小圆圈代表不同的进程。
 
-![4](http://stxg6c3mb.hd-bkt.clouddn.com/image 1.png)
+![4](http://stxg6c3mb.hd-bkt.clouddn.com/image1.png)
 
 这里四个时间内不同进程的执行逻辑是：进程0在时间点 (T 1) 首先调用 `MPI_Barrier`。然后进程0就一直等在屏障之前，之后进程1和进程3在 (T 2) 时间点到达屏障。当进程2最终在时间点 (T 3) 到达屏障的时候，其他的进程就可以在 (T 4) 时间点再次开始运行。`MPI_Barrier` 在很多时候很有用。其中一个用途是用来同步一个程序，使得分布式代码中的某一部分可以被精确的计时。
 
@@ -578,7 +578,7 @@ void my_bcast(void* data, int count, MPI_Datatype datatype, int root,
 
 `MPI_Scatter`是一个类似`MPI_Bcast`的集体通信机制。它会会设计一个指定的根进程，根进程会将数据发送到 communicator 里面的所有进程，但是给每个进程发送的是*一个数组的一部分数据*。
 
-![5](http://stxg6c3mb.hd-bkt.clouddn.com/image 2.png)
+![5](http://stxg6c3mb.hd-bkt.clouddn.com/image2.png)
 
 `MPI_Bcast` 在根进程上接收一个单独的数据元素，复制给其他进程。
 
@@ -600,7 +600,7 @@ int MPI_Scatter(
 
 顾名思义这里的`MPI_Gather`是和`MPI_Scatter` 相反的。它是从多个进程里面收集数据到一个进程上面，这个机制对很多平行算法很有用，比如并行的排序和搜索。如图：
 
-![5](http://stxg6c3mb.hd-bkt.clouddn.com/image 3.png)
+![5](http://stxg6c3mb.hd-bkt.clouddn.com/image3.png)
 
 元素是根据接收到的进程的秩排序的。函数签名如下：
 
@@ -732,7 +732,7 @@ Avg computed across original data is 0.444133
 
 前面出现了一对多，多对一，一对一等的通信模式，那么`MPI_Allgather`就是多对多。准确来说是收集所有进程的数据然后发到所有进程上，不涉及根进程了，所以可以看到函数签名里面少了`int root`。
 
-![6](http://stxg6c3mb.hd-bkt.clouddn.com/image 4.png)
+![6](http://stxg6c3mb.hd-bkt.clouddn.com/image4.png)
 
 ```cpp
 int MPI_Allgather(
@@ -884,7 +884,7 @@ int MPI_Reduce(
 - `MPI_MAXLOC` - 返回最大值和所在的进程的秩。
 - `MPI_MINLOC` - 返回最小值和所在的进程的秩。
 
-![7](http://stxg6c3mb.hd-bkt.clouddn.com/image 5.png)
+![7](http://stxg6c3mb.hd-bkt.clouddn.com/image5.png)
 
 范例代码如下：
 
@@ -970,7 +970,7 @@ int MPI_Allreduce(
 
 它不需要根进程 ID（因为结果分配给所有进程）。 下图介绍了 `MPI_Allreduce` 的通信模式：
 
-![7](http://stxg6c3mb.hd-bkt.clouddn.com/image 6.png)
+![7](http://stxg6c3mb.hd-bkt.clouddn.com/image6.png)
 
 相当于先执行了`MPI_Reduce`之后，再执行`MPI_Bcast`。
 
@@ -1081,7 +1081,7 @@ int MPI_Comm_split(
 
 示例中，我们尝试将单个全局通讯器拆分为一组较小的通讯器。 在此示例中，我们将想象我们已经在逻辑上将原始通讯器布局为共 16 个进程的 4x4 网格，并且希望按行划分网格。 为此，每一行将获得自己的颜色（参数 `color`）。 在下图中，您可以看到左图具有相同颜色的每组进程如何最终变成右图的自己的通讯器。
 
-![8](http://stxg6c3mb.hd-bkt.clouddn.com/image 7.png)
+![8](http://stxg6c3mb.hd-bkt.clouddn.com/image7.png)
 
 ```cpp
 // 代码实现
@@ -1143,7 +1143,7 @@ WORLD RANK/SIZE: 15/16 	 ROW RANK/SIZE: 3/4
 
 如图：上面是并集，会从其他两个集合中创建一个新的（可能）更大的集合。 新集合包括前两个集合的所有成员（无重复）。下面是交集，会从其他两个集合中创建一个新的（可能）更小的集合。 新集合包括两个原始集合中都存在的所有成员。
 
-![9](http://stxg6c3mb.hd-bkt.clouddn.com/image 8.png)
+![9](http://stxg6c3mb.hd-bkt.clouddn.com/image8.png)
 
 如上所述，通讯器包含一个上下文或 ID，以及一个组。 调用 `MPI_Comm_group` 会得到对该组对象的引用`MPI_Group* group`。
 
