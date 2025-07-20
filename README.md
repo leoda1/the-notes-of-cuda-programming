@@ -1,11 +1,19 @@
-## 前言
-愿望：希望自己能够将这个项目持续更新下去，从而能够帮助到更多的人。希望可以有更多人加入本项目(目前每个实现并不是都有讲解，并且还有很多更深入的部分没有涉及，其次就是cuda programming notes太长太杂需要慢慢看慢慢写，最后缺少TVM此类编译器优化的内容)，一起维护，共同进步。
+## Introduction
+This repository documents the learning journey of a master's student entering the field of AI infrastructure. It serves as a personal knowledge base and practical reference covering essential components in high-performance computing for AI, including:
+* CUDA programming for GPU parallelism
+* TensorRT for model inference acceleration
+* NCCL for multi-GPU communication
+* MPI for distributed computing
+* CPU multithreading and performance optimization
+The notes and examples aim to bridge theoretical understanding and practical implementation in the AI infra stack.
 (邮箱：20231083510920@buu.edu.cn, 电话:18621761124)
 ## Related note
-可以在我的notion中在线阅读笔记(主要是GPU mode的理论知识)
-[https://amethyst-cayenne-949.notion.site](https://amethyst-cayenne-949.notion.site/CUDA-168cb70356ad80629a3cd61f59a6dcf2?pvs=4)，目前更新的内容如下：
-![alt text](image.png)
-## 项目目录解释
+I will update gpu-mode and cuda programming guide notes in here.
+| 名称                  | 链接 |
+|-----------------------|------|
+| CUDA Programming Notes | [open](./cuda%20programming%20notes/) |
+| GPU Mode               | [open](./cuda-mode/) |
+## Project structure
 ```
 ├── code
 │   ├── CPU
@@ -35,11 +43,28 @@
 |   |    ├──2.8 Load_model 加载模型
 |   |    ├──2.9 Infer_model 推理模型
 |   |    ├──2.10 Custom-trt-plugin 写tensorRT不支持的简称plugin
-├── cuda_programming notes 英伟达《CUDA C++ Programming Guide》官方文档的阅读笔记
-│   ├── img 存放书中插图
 │   ├── xxxxxx.md 存放书中每章的学习笔记
+│   ├── NCCL
+|   |    ├──3.1 Simple example of allreduce
+│   ├── MPI
+|   |    ├──4.1 Peer to peer
+|   |    ├──4.2 Collective
+|   |    ├──4.3 Advanced collectived
+│   ├── xxxxxx.md 存放书中每章的学习笔记
+├── cuda_programming notes 英伟达《CUDA C++ Programming Guide》官方文档的阅读笔记
 ├── code-mode 这里是可以找到cuda-mode目前0-15章节的笔记以及reduce优化的实验
 ```
+
+## How 2 configure your environment
+### 自行配置的过程
+这里在csdn写了blog记录了环境配置的过程，以及如何用cmake构建及运行上述代码, 文章链接
+* [if you are windows + vscode + cuda + tensorRT，click here](https://blog.csdn.net/buuliuda/article/details/139101651?spm=1001.2014.3001.5502)。
+* [if you are wsl / linux + vscode + cuda + tensorRT， click here](https://blog.csdn.net/buuliuda/article/details/144903013?spm=1001.2014.3001.5501)
+
+### 不配置的方法
+这里推荐用docker直接使用nvidia的ngc镜像:
+* [https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda)
+
 ## How 2 install this repo
 ```sh
 git clone https://github.com/leoda1/the-notes-of-cuda-programming.git
@@ -57,11 +82,8 @@ cmake -B build -G "Visual Studio 16 2019" #我是用的visual studio 2019来构�
 cmake --build build # 编译代码
 .\build\Debug\your_project.exe #运行Debug版本的可执行文件
 ```
-这里在csdn写了blog记录了怎么用cmake运行, 文章链接
-* [如果你是windows + vscode + cuda + tensorRT点击这里](https://blog.csdn.net/buuliuda/article/details/139101651?spm=1001.2014.3001.5502)。
-* [如果你是wsl / linux + vscode + cuda + tensorRT点击这里](https://blog.csdn.net/buuliuda/article/details/144903013?spm=1001.2014.3001.5501)
 
 ## 参考资料
 - [CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)
 - [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/)
-- [NVIDIA CUDA Samples（官方在github上的项目，正在看）](https://github.com/NVIDIA/cuda-samples)
+---
