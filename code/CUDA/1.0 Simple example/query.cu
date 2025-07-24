@@ -17,9 +17,9 @@ int main()
     ErrorCheck(cudaGetDeviceProperties(&device_prop, device_id), __FILE__, __LINE__);
 
     printf("Device %d:                                      %s\n", 
-    device_id, device_prop.name);
-        printf("Compute Capability:                             %d.%d\n", 
-        device_prop.major, device_prop.minor);
+    	    device_id, device_prop.name);
+    printf("Compute Capability:                             %d.%d\n", 
+      	    device_prop.major, device_prop.minor);
     printf("Number of SMs:                                  %d\n", 
             device_prop.multiProcessorCount);
     printf("L2 Cache Size:                                  %d MB\n",
@@ -61,7 +61,7 @@ int main()
     printf("ECC Enabled:                                    %d\n", 
             device_prop.ECCEnabled);
     printf("PCI Bus ID:                                     %d\n", 
-         device_prop.pciBusID);
+            device_prop.pciBusID);
     printf("PCI Device ID:                                  %d\n", 
             device_prop.pciDeviceID);
     

@@ -33,7 +33,7 @@ void Matmul_device(float* M_host, float* N_host, float* P_host, int width, int b
     //launch the kernel
     dim3 dimBlock(blocksize, blocksize);
     dim3 dimGrid(width / blocksize, width / blocksize);
-    Matmul_kernel<<<dimGrid, dimBlock>>>(M_device, N_device, P_device, width);
+    Matmul_kernel<<<dimGrid, dimBlock, 0, nullptr>>>(M_device, N_device, P_device, width);
     //copy data from device to host
     CUDA_CHECK(cudaMemcpy(P_host, P_device, size, cudaMemcpyDeviceToHost));
     //synchronize the device
