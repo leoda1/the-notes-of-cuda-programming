@@ -6,9 +6,9 @@ This repository documents the learning journey of a master's student entering th
 * MPI for distributed computing
 * CPU multithreading and performance optimization
 The notes and examples aim to bridge theoretical understanding and practical implementation in the AI infra stack.
-(邮箱：20231083510920@buu.edu.cn, 电话:18621761124)
-## Related note
-I will update gpu-mode and cuda programming guide notes in here.
+(mail：20231083510920@buu.edu.cn, tel:18621761124)
+## Online note
+I'm updating my notes on GPU mode and the CUDA Programming Guide here.
 | 名称                  | 链接 |
 |-----------------------|------|
 | CUDA Programming Notes | [open](./cuda%20programming%20notes/) |
@@ -31,6 +31,7 @@ I will update gpu-mode and cuda programming guide notes in here.
 |    ├──1.5 Shared_conflict 解决1.4的bank conflict
 |    ├──1.6 Stream 使用多个流
 |    ├──1.7 FlashAttn 注意力领域前沿FlashAttn V1算子的复现
+|    ├──1.8 HGEMM cublass&cute achieve
 ├── TensorRT
 |    ├──2.1 Generate-onnx 生成onnx
 |    ├──2.2 Export-onnx 导出onnx
@@ -85,4 +86,6 @@ cmake --build build # 编译代码
 ## 参考资料
 - [CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)
 - [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/)
+- [cuda基础](https://github.com/xlite-dev/LeetCUDA)
+- [公开课](https://github.com/gpu-mode/lectures)
 ---
